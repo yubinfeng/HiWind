@@ -16,7 +16,7 @@ using Common = HiWind.Common;
 namespace WebApp.Controllers
 {
     /// <summary>
-    /// Main/// 
+    /// Main
     /// Create: ybf 2014/5/20
     /// Last Update: ybf 2016/03/03
     /// </summary>
@@ -77,24 +77,17 @@ namespace WebApp.Controllers
         #region Tree LeftHouse  
 
         /// <summary>
-        /// 树节点
+        /// tree node
         /// </summary>
         StringBuilder AllNodes = new StringBuilder();
 
         /// <summary>
-        /// 获取顶级菜单节点
+        /// get top menu
         /// </summary>
         /// <returns></returns>
         public string GetTopMenu()
         {
-            string result = "[";
-            result += "{ \"id\": \"1\", \"text\": \"0菜单管理\", \"iconCls\": \"icon-hamburg-product-design\" , \"attributes\": { \"href\": \"/main/menusearch?id=1&icon=icon-hamburg-docs&title=菜单管理\" }},";
-            result += "{ \"id\": \"2\", \"text\": \"0用户管理\", \"iconCls\": \"icon-hamburg-docs\", \"attributes\": { \"href\": \"/users/search?id=1&icon=icon-hamburg-docs&title=用户管理\" }},";
-            result += "{ \"id\": \"3\", \"text\": \"0权限管理\", \"iconCls\": \"icon-hamburg-product-design\" , \"attributes\": { \"href\": \"/users/search?id=3\"} },	";
-            result += "{ \"id\": \"4\", \"text\": \"0日志管理\", \"iconCls\": \"icon-hamburg-docs\", \"attributes\": { \"href\": \"/users/search?id=1&icon=icon-hamburg-docs&title=用户管理\" }},";
-            result += "{ \"id\": \"10\", \"text\": \"0EasyUI API\", \"iconCls\": \"icon-hamburg-product-design\"  },	";
-            result += "{ \"id\": \"11\", \"text\": \"0EasyUI Demo\", \"iconCls\": \"icon-hamburg-product-design\" }";
-            result += "]";
+            string result = "";
                       
             DataTable dt = bllMenu.GetTopMenu();
             result = "[";
@@ -115,9 +108,8 @@ namespace WebApp.Controllers
             return result;
         }
 
-
         /// <summary>
-        /// 根据父ID获取子节点序列
+        /// get children menus
         /// </summary>
         /// <returns></returns>
         public string GetChildrenMenus()
@@ -125,10 +117,8 @@ namespace WebApp.Controllers
             string menuparentid = Request.QueryString["menuparentid"].ToString();
 
             StringBuilder lastResult = new StringBuilder();
-            lastResult.Append("[");
-           
+            lastResult.Append("[");           
             DataTable dt = bllMenu.GetChildrenMenus(menuparentid);
-
             if (dt.Rows.Count > 0)
             {
                 string resultchildnodes = GetNodes(dt).ToString(); ;
@@ -139,7 +129,7 @@ namespace WebApp.Controllers
             return lastResult.ToString();
         }
         /// <summary>
-        /// 节节点
+        /// get nodes
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
@@ -152,7 +142,6 @@ namespace WebApp.Controllers
                 foreach (DataRow row in dt.Rows)
                 {
                     AllNodes.Append("{ \"id\": \"" + row["ID"].ToString().Trim() + "\", \"text\": \"" + row["MenuName"].ToString().Trim() + "\", \"iconCls\": \"" + row["MenuIcon"].ToString().Trim() + "\"");
-                    //递归节点
                     DataTable dtnodes = bllMenu.GetChildrenMenus(row["ID"].ToString().Trim());
                     if (dtnodes.Rows.Count > 0)
                     {
@@ -160,14 +149,11 @@ namespace WebApp.Controllers
                         GetNodes(dtnodes);
                         AllNodes.Append("]");
                     }
-
                     if (row["MenuUrl"].ToString().Trim() != "")
                         AllNodes.Append(" , \"attributes\": { \"href\": \"" + row["MenuUrl"].ToString().Trim() + "\" }}");
                     else
                         AllNodes.Append("}");
-
                     i += 1;
-
                     if (i < dt.Rows.Count)
                         AllNodes.Append(",");
                 }
@@ -178,12 +164,12 @@ namespace WebApp.Controllers
        
         #region ReadMessage
         /// <summary>
-        /// 服务执行情况读取 For SignalR
+        /// get server info For SignalR
         /// </summary>
         /// <returns></returns>
         public string MessageRead(string UserId)
         {
-            string result = "0;info"; //0,无提示信息 info 消息内容 0发送人
+            string result = "0;info"; //0,no message info  message into  0 sender
             string NoRead = "select  * from SysMessage  where id  not in (select SysMessage.id from SysMessage where IsRead ='已读')  and ( SysMessage.RceiveUser='" + UserId + "' or SysMessage.RceiveUser='*') ORDER BY SysMessage.UpdateDate,SysMessage.CreateDate ASC";
            
             DataTable Dt = db.Query(NoRead);
@@ -197,19 +183,15 @@ namespace WebApp.Controllers
                 {
                  string IsEndStr = i < Dt.Rows.Count - 1 ? "," : "";
                  Id +="'"+n["ID"].ToString().Trim()+"'"+IsEndStr;               
-                 //RceiveUser += n["RceiveUser"].ToString().Trim();
                  string SendUserName = db.Query("select *  from SysUser where id='" + n["SendUser"].ToString().Trim() + "'").Rows[0]["FullName"].ToString().Trim();
                  info += SendUserName+":"+ n["info"].ToString().Trim() + "  （" + n["CreateDate"].ToString().Trim() + ")" + (IsEndStr != "" ? "<br>" : "");
-                 //SendUser += SendUserName+IsEndStr;
                  i += 1;
                 }
-                //bll.ExecuteSql(ExSql);
                 result = Id + ";" + info;
 
             }
             else
             {
-
                 result = "0;info";
             }
             return result;

@@ -1,11 +1,8 @@
-﻿//首页初始化
-$(function () {           
+﻿$(function () {           
     try {
-        //最大化
+
         WindowMax();
-        //初始化HOME
         GetLoginInfo();
-        //加载LOGO
         var html = $("#LogionLogs").html("");
         $.ajax({
             type: "POST",
@@ -22,10 +19,8 @@ $(function () {
                 }
             }
         });
-        //初始化首页面
         opsTab = { title: "系统主页", href: '/main/HomePage/?ScreenHeight=' + screen.height, iniframe: true, closable: false, refreshable: true, iconCls: "icon-standard-house", repeatable: true, selected: true };
         window.mainpage.mainTabs.addModule(opsTab);
-        //禁止选择文本
         window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
 
     }
@@ -592,9 +587,7 @@ $(function () {
 
 })(jQuery);
 
-
-
-//North部分  用户信息显示
+//North
 function GetLoginInfo() {
         $.ajax({
             type: "POST",
@@ -605,11 +598,7 @@ function GetLoginInfo() {
         });
 }
 
-
-
-
-
-//左边导航菜单显示
+//show left menu 
 function LeftMenuShow() {
     if ($("#UserName").val() == "" || $("#PassWord").val() == "" || $("#UserType").val() == "") {
         $.messager.alert('提示', "用户类型、用户名、密码不能为空！");
@@ -642,16 +631,13 @@ function LeftMenuShow() {
     }
 }
 
-
-//即时通讯
+//instant messaging
 function SignalRJs(MyId) {
     var chat = $.connection.chatHuba;
     var fist = "";
     try {
-        //收到此请求，向当前客户端用户发送服务结果 , 如成功显示，则更新消息状态
-        chat.client.showMessage = function (MessageType, RceiveUser, SendUser, Info, MsgMessageType, MsgRceiveUser, MsgInfo, MsgId) {
-
-            //$.messager.alert("我的消息 [来自用户:" + SendUser + "],接收对象：[全体在线成员]", MsgInfo, "info");
+        //Receive info and request server
+        chat.client.showMessage = function (MessageType, RceiveUser, SendUser, Info, MsgMessageType, MsgRceiveUser, MsgInfo, MsgId) {           
             if (MsgRceiveUser == "*") {
                 if (fist != MsgInfo) {
                     chat.server.updateMessageState(MsgId);
@@ -662,12 +648,12 @@ function SignalRJs(MyId) {
                         $("#ContenMsg").panel({ content: oldmsg + "：<br><span style='color:#CC0000'>" + MsgInfo + "</span>" });
                     }
                 }
-                //更新接收情况
+                //Update receive information 
                 fist = MsgInfo;
             }
             else if (MsgRceiveUser == MyId) {
 
-                //更新接收情况
+                //update resi
                 if (fist != MsgInfo) {
                     chat.server.updateMessageState(MsgId);
                     if ($("#ContenMsg")[0] == undefined)
@@ -681,12 +667,10 @@ function SignalRJs(MyId) {
             }
         };
 
-        //用户发送短消息时，向服务器提交广播申请
+        //Open the communication and submit to the server ID 
         chat.client.MessageToServer = function () {
             chat.server.sendUser();
         };
-
-        //开启通讯后向服务器报送ID
         // Start Hub
         $.connection.hub.start().done(function () {
             chat.server.getUser(MyId);

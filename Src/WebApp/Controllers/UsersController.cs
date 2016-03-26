@@ -38,9 +38,9 @@ namespace WebApp.Controllers
         }
         #endregion
 
-        #region 用户登录
+        #region User login
         /// <summary>
-        /// 用户登录校验
+        /// User login
         /// </summary>
         /// <param name="usrename"></param>
         /// <param name="password"></param>
@@ -56,14 +56,13 @@ namespace WebApp.Controllers
                // string CheckCode= Request["CheckCode"].ToString().Trim();
                 DataTable dt = bll.UserLogin(UserName, PassWord);
                result = "{totalProperty:'0',checkcode:'false'}";
-
-                //校验码
+                //check code
                 //if (ValidatorCode(CheckCode) != 1)
                 //    return "{totalProperty:'" + dt.Rows.Count + "',checkcode:'false',msg:'校验码输入错误！'}"; ;
-                //登录成功
-                if(dt.Rows.Count > 0)
+                //Login
+                if (dt.Rows.Count > 0)
                 {
-                    //判断是否锁定
+                    //lock
                     if (dt.Rows[0]["UserState"].ToString().Trim() != "锁定")
                     {
                         //更新日志
@@ -72,7 +71,7 @@ namespace WebApp.Controllers
                         Session["UserID"] = dt.Rows[0]["id"].ToString().Trim();
                         Session["FullName"] = dt.Rows[0]["fullname"].ToString().Trim();
                         //加入登录日志
-                       
+
                         System.Collections.Hashtable ht = new Hashtable();
                         ht.Add("SysLogs.LogsType", "用户登录");
                         ht.Add("SysLogs.IpAddress", Request.UserHostAddress.ToString());
@@ -81,7 +80,7 @@ namespace WebApp.Controllers
                         ht.Add("SysLogs.CreateDate", System.DateTime.Now.ToString());
                         string SaveResult = BllTra.InsertOneParameter("SysLogs", "Id", ht);
 
-                        //返回结果                
+                        //return result               
                         return "{totalProperty:'" + dt.Rows.Count + "',checkcode:'true',msg:'登录成功！'}"; ;
                     }
                     else
@@ -109,10 +108,7 @@ namespace WebApp.Controllers
             }
         }
 
-        /// <summary>
-        /// 是否登录
-        /// </summary>
-        /// <returns></returns>
+
         public bool IsLogin()
         {
             if (Session["UserID"] == null)
@@ -122,7 +118,7 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// 获取用户登录信息
+        /// get user info
         /// </summary>
         /// <param name="usrename"></param>
         /// <param name="password"></param>
@@ -133,12 +129,9 @@ namespace WebApp.Controllers
             string result = ""; ;
             try
             {
-                //登录成功
                 if (Session["UserID"]!=null)
                 {
-                    // 获取用户信息
                     DataTable dt = bll.GetList("id='" + Session["UserID"].ToString() + "'").Tables[0];
-                    //返回结果
                     result = "当前用户：" + dt.Rows[0]["fullname"].ToString().Trim() + "(" + dt.Rows[0]["username"].ToString().Trim() + ")  机构：" + db.Query("SELECT * FROM SysOrganization WHERE ID='" + dt.Rows[0]["OrgId"].ToString().Trim() + "'").Rows[0]["OrgName"].ToString().Trim() + " 最后登录：" + System.DateTime.Now.ToString().Trim();
                     return result;
                 }
@@ -152,16 +145,9 @@ namespace WebApp.Controllers
                 return "出现异常！";
             }
         }
-
+        
         /// <summary>
-        /// 获取随机校验码
-        /// </summary>
-        /// <param name="usrename"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-
-        /// <summary>
-        /// 获取验证码
+        ///get check code
         /// </summary>
         /// <returns></returns>
         public void CodeImg()
@@ -191,9 +177,9 @@ namespace WebApp.Controllers
         }
         #endregion
 
-        #region 用户退出
+        #region exit
         /// <summary>
-        /// 用户退出
+        /// user exit
         /// </summary>
         /// <param name="usrename"></param>
         /// <param name="password"></param>
@@ -213,51 +199,40 @@ namespace WebApp.Controllers
         }
         #endregion
 
-        #region 用户管理
+        #region user manage
         /// <summary>
-        /// 返回用户列表
+        /// return user list
         /// </summary>
         /// <returns></returns>
         public string UserList()
         {
             string result = "{\"total\":0,\"rows\":[{}]}";
-            // 获取用户信息
             DataTable dt = bll.GetList("").Tables[0];
-            //返回结果
             if(dt.Rows.Count>0)
             {
                 result = Common.JosnEasyUI.TableToJosn(dt);
-            }
-            
+            }            
             return result;
         }
        
         /// <summary>
-        /// 新增表单保存
+        /// add user save
         /// </summary>
         /// <returns></returns>
         public string AddFormSave()
         {
-            //主表
             string MasterTable = "SysUsers";
-            //主键
             string PrimaryKey = "ID";
-            //主键编号
             string KeyNumber = "";
-
-            //固定字段值
             string CreateId = Session["UserId"].ToString();
-            string CreateDate = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            
+            string CreateDate = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");            
             HttpRequestBase a = Request;
-
-
             return "";
         }
 
         #endregion    
 
-        #region 验证用户是否重复
+        #region Validate user
         public string ValidateUserInfo()
         {
             string result = string.Empty;

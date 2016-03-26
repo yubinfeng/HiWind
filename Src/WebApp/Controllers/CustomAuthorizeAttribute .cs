@@ -8,10 +8,10 @@ using System.Web.Mvc;
 namespace WebApp
 {
     /// <summary>
-    /// Name:重写AuthorizeAttribute实现统一权限验证
+    /// Name:overwrite AuthorizeAttribute
     /// Author:ybf
     /// CreateDate:2014/6/10
-    /// UpdateDate:2014/6/10
+    /// UpdateDate:2016/3/27
     /// </summary>
     public class CustomAuthorizeAttribute : System.Web.Mvc.AuthorizeAttribute
     {
@@ -21,43 +21,29 @@ namespace WebApp
             {
                 throw new ArgumentNullException("HttpContext");
             }
-            //权限验证
-            //1.用户登录可访问
             if (httpContext.Session["UserId"] != null)
             {
                 return true;
-            }            
-            //2.调用权限类进行验证
+            }
             //if (!httpContext.User.Identity.IsAuthenticated)
             //{
             //    return false;
             //}
             //string userName = httpContext.User.Identity.Name;
-            ///根据用户名从数据库中获取用户，实现自定义验证。
-            ///
             return false;
         }
-
         public override void OnAuthorization(System.Web.Mvc.AuthorizationContext filterContext)
         {
-           //不缓存
             filterContext.HttpContext.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-
-            //获取action
             string controllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
             string actionName = filterContext.ActionDescriptor.ActionName;
-            //验证action
             if (IsAuthorityActionOrControler(controllerName, actionName))
-                return ;                      
-
+                return;
             base.OnAuthorization(filterContext);
         }
-
-
-        //没有权限时处理
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            //登录超时或没有登录时
+            //time out
             if (filterContext.HttpContext.Session["UserId"] == null)
             {
                 StringBuilder sb = new StringBuilder();
@@ -67,24 +53,24 @@ namespace WebApp
                 sb.Append("<script src='/Scripts/jquery-easyui-1.3.6/jquery.easyui.min.js' type='text/javascript'></script>");
                 sb.Append("<script src='/Scripts/jquery-easyui-1.3.6/locale/easyui-lang-zh_CN.js' type='text/javascript'></script>");
                 sb.Append("<link href='/Scripts/jeasyui-extensions/jeasyui.extensions.css' rel='stylesheet' type='text/css' />");
-                sb.Append("<script src='/Scripts/jeasyui-extensions/easyuiext.min.js' type='text/javascript'></script>");;
+                sb.Append("<script src='/Scripts/jeasyui-extensions/easyuiext.min.js' type='text/javascript'></script>"); ;
                 sb.Append("<link href='/UserStyle/UserStyle_14.css' rel='stylesheet' />");
-                sb.Append("<script  type='text/javascript'>  $(function () {   $.easyui.messager.alert('操作提醒', '非常抱歉，您登录超时或未登录，请重新登录系统！', 'warning', function () { $.util.top.location.href = '/Users/Login'; }) });</script>");     
+                sb.Append("<script  type='text/javascript'>  $(function () {   $.easyui.messager.alert('操作提醒', '非常抱歉，您登录超时或未登录，请重新登录系统！', 'warning', function () { $.util.top.location.href = '/Users/Login'; }) });</script>");
                 filterContext.RequestContext.HttpContext.Response.Write(sb.ToString());
                 filterContext.RequestContext.HttpContext.Response.End();
                 return;
             }
 
-            if (filterContext.HttpContext.Request.IsAjaxRequest()){}
+            if (filterContext.HttpContext.Request.IsAjaxRequest()) { }
             base.HandleUnauthorizedRequest(filterContext);
-            if (filterContext.HttpContext.Response.StatusCode == 401){return;}
+            if (filterContext.HttpContext.Response.StatusCode == 401) { return; }
         }
-      
+
         /// <summary>
-        /// 免校验Action(公众开放授权)
+        /// Public open license 
         /// </summary>
         /// <returns></returns>
-        private bool IsAuthorityActionOrControler(string controllerName,string actionName)
+        private bool IsAuthorityActionOrControler(string controllerName, string actionName)
         {
             if (controllerName == "Users")
             {
