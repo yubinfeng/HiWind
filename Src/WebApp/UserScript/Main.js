@@ -593,6 +593,7 @@ $(function () {
 })(jQuery);
 
 
+
 //North部分  用户信息显示
 function GetLoginInfo() {
         $.ajax({
@@ -603,6 +604,10 @@ function GetLoginInfo() {
             }
         });
 }
+
+
+
+
 
 //左边导航菜单显示
 function LeftMenuShow() {
@@ -636,6 +641,7 @@ function LeftMenuShow() {
         });
     }
 }
+
 
 //即时通讯
 function SignalRJs(MyId) {
