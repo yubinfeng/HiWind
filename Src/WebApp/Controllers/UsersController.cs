@@ -139,7 +139,7 @@ namespace WebApp.Controllers
                     // 获取用户信息
                     DataTable dt = bll.GetList("id='" + Session["UserID"].ToString() + "'").Tables[0];
                     //返回结果
-                    result = "当前用户：" + dt.Rows[0]["fullname"].ToString().Trim() + "(" + dt.Rows[0]["username"].ToString().Trim() + ")  机构：" + db.Query("SELECT * FROM Organization WHERE ID='" + dt.Rows[0]["OrgId"].ToString().Trim() + "'").Rows[0]["OrgName"].ToString().Trim() + " 最后登录：" + System.DateTime.Now.ToString().Trim();
+                    result = "当前用户：" + dt.Rows[0]["fullname"].ToString().Trim() + "(" + dt.Rows[0]["username"].ToString().Trim() + ")  机构：" + db.Query("SELECT * FROM SysOrganization WHERE ID='" + dt.Rows[0]["OrgId"].ToString().Trim() + "'").Rows[0]["OrgName"].ToString().Trim() + " 最后登录：" + System.DateTime.Now.ToString().Trim();
                     return result;
                 }
                 else
@@ -231,61 +231,7 @@ namespace WebApp.Controllers
             
             return result;
         }
-
-        /// <summary>
-        /// 生成新增页面
-        /// </summary>
-        /// <returns></returns>
-        public string AddFormCreate()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append("<fieldset class=\"fieldsetAdd\">");
-            sb.Append("");
-            sb.Append("          <legend>帐户基本信息</legend>");
-            sb.Append("             <table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\" class=\"tableAdd\">");
-            sb.Append("                 <tr>");
-            sb.Append("                   <td>用户名：</td>");
-            sb.Append("                   <td><input name=\"SysUser_UserName\" id=\"SysUser_UserName\" type=\"text\" class=\"easyui-validatebox\" data-options=\"required: true\" /></td>");
-            sb.Append("                   <td>密码：</td>");
-            sb.Append("                   <td><input name=\"SysUser_PassWord\" id=\"SysUser_PassWord\" type=\"text\" class=\"easyui-validatebox\" data-options=\"required: true\" /></td>");
-            sb.Append("               </tr>");
-            sb.Append("                 <tr>");
-            sb.Append("                   <td>姓名：</td>");
-            sb.Append("                   <td><input name=\"SysUser_FullName\" id=\"SysUser_FullName\" type=\"text\" class=\"easyui-validatebox\" data-options=\"required: true\" /></td>");
-            sb.Append("                   <td>用户类型：</td>");
-            sb.Append("                   <td><input name=\"SysUser_UserType\" id=\"SysUser_UserType\" type=\"text\" class=\"easyui-combobox\" data-options=\"required: true,valueField:'value',panelHeight : 'auto',textField:'label',data: [{label: '开发者',value: '1'},{label: '管理员',value: '2'},{label: '操作用户',value: '3'}]\" /></td>");
-            sb.Append("                 </tr>");
-            sb.Append("                 <tr>");
-            sb.Append("                   <td>用户组：</td>");
-            sb.Append("                   <td><input name=\"SysUser_UserGroupId\" id=\"SysUser_UserGroupId\" type=\"text\" class=\"easyui-validatebox\" data-options=\"required: false\" /></td>");
-            sb.Append("                   <td>&nbsp;</td>");
-            sb.Append("                   <td>&nbsp;</td>");
-            sb.Append("                 </tr>");
-            sb.Append("               </table>");
-            sb.Append("               </fieldset>");
-            sb.Append("             <fieldset  class=\"fieldsetAdd\">");
-            sb.Append("             <legend>其它信息</legend>");
-            sb.Append("             <table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\" class=\"tableAdd\">");
-            sb.Append("               <tr>");
-            sb.Append("                 <td>创建时间：</td>");
-            sb.Append("                 <td><input name=\"SysUser_CreateDate\" id=\"SysUser_CreateDate\" type=\"text\"  class=\"easyui-datebox\"  data-options=\"required: true, validType: 'shortDate'\" /></td>");
-            sb.Append("                 <td>更新时间：</td>");
-            sb.Append("                 <td><input name=\"SysUser_UpdateDate\" id=\"SysUser_UpdateDate\" type=\"text\"  class=\"easyui-datebox\"  data-options=\"required: true, validType: 'shortDate'\" /></td>");
-            sb.Append("               </tr>");
-            sb.Append("                 <tr>");
-            sb.Append("                 <td>操作人：</td>");
-            sb.Append("                 <td><input name=\"SysUser_CreateId\" id=\"SysUser_CreateId\" type=\"text\" class=\"easyui-validatebox\" data-options=\"required: false\" /></td>");
-            sb.Append("                 <td></td>");
-            sb.Append("                 <td></td>");
-            sb.Append("               </tr>");
-            sb.Append("             </table>");
-            sb.Append("</fieldset>");
-
-            string result = "<form id=\"AddForm\"  class=\"easyui-form\">" + sb.ToString() + "</form>";
-            return result;
-
-        }
+       
         /// <summary>
         /// 新增表单保存
         /// </summary>
