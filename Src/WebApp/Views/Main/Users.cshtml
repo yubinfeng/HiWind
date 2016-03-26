@@ -1,0 +1,228 @@
+﻿<!--Title-->
+@{
+    string SystemName = "数据库连接失败，请联系管理员！";
+    try
+    {
+        SystemName = new HiWind.EasyUI.Config().GetConfigModel().SystemName;
+    }
+    catch (Exception ex) { }
+    ViewBag.Title = SystemName;
+}
+
+<!--Head-->
+@section Head{
+<!--othen extensions-->
+<script src="/Scripts/jeasyui-extensions/jquery-easyui-toolbar/jquery.toolbar.js" type="text/javascript"></script>
+<script src="/Scripts/jeasyui-extensions/jeasyui.extensions.combogrid.js" type="text/javascript"></script>
+<script src="/Scripts/jeasyui-extensions/jeasyui.extensions.gridselector.js" type="text/javascript"></script>
+<script src="/Scripts/jeasyui-extensions/jquery-easyui-comboselector/jquery.comboselector.js" type="text/javascript"></script>
+<script src="/Scripts/jeasyui-extensions/jeasyui.extensions.icons.js" type="text/javascript"></script>
+<script src="/Scripts/jeasyui-extensions/jquery-easyui-comboicons/jquery.comboicons.js" type="text/javascript"></script>    
+<!--Import othen extensions-->
+<script src="/Scripts/common/plugin-import.js"></script>  
+ <!--Print-->
+<script src="/Scripts/LodopFuncs.js"></script>
+<style type="text/css">
+    .gridpanel {
+        border-right: 1px dotted transparent;
+        border-bottom: 1px dotted transparent;
+    }       
+</style>
+
+<script type="text/javascript">     
+
+    $(function () {
+        
+        //RoleGrid
+        $("#GridUser").datagrid({
+            singleSelect: true, selectOnCheck: true,
+            onSelect: function (rowIndex, rowData) {         
+                $("#GridUserRole").datagrid('reload', { UserId: rowData["Id"] + "*", rod: Math.random() });
+                $("#paneltab").layout('expand', 'east');             
+            },
+            onUnselect: function (rowIndex, rowData) {
+                $("#paneltab").layout('collapse', 'east');               
+            },
+            onLoadSuccess: function (data) {
+                debugger;
+                if ($(this).datagrid('getSelections').length < 0) {
+                    $("#paneltab").layout('collapse', 'east');                  
+                }
+            }
+        });
+    
+        //Add Role
+        $('#AddUsers').click(function () { 
+            if ($("#GridUser").datagrid('getSelections').length< 1) {              
+                $.easyui.loaded('#UsersListPanel');
+                return false;
+            }
+            opts = {
+                topMost: false,
+                title:"选择角色（可多选）",
+                extToolbar: true,
+                toolbar: [
+                    "角色名：",
+                    { id: "RoleName", type: "textbox", options: { "width":120 } },
+                    {
+                        type: "button", options: {
+                            text: "查询", iconCls: "icon-search", handler: function (toolbar) {
+                                var bar = $(toolbar), RoleName = bar.find("#RoleName").val();//, RoleType = bar.find("#RoleType").combobox('getValue') == undefined ? "" : bar.find("#RoleType").combobox('getValue');
+                                dg = bar.closest(".grid-selector-container").find(".grid-selector");
+                                dg.datagrid("load", { RoleName: RoleName + "*包含",rod: Math.random() });
+                            }
+                        }
+                    }
+                ],
+                method: "get",
+                url: '/Main/SearchList/?SearchId=SysSearch00000122&TableName=SysRole&rod=' + Math.floor(Math.random() * 1000),
+                idField: 'Id', textField: 'RoleName',
+                autoShowPanel: false,
+                multiple: true,
+                remoteSort: false,
+                pagination: true,
+                frozenColumns: [[
+                    { field: "ck", checkbox: true }
+                ]],
+                columns: [[
+                   { field: 'Id', hidden: true, title: '编号' }, { field: 'RoleName', hidden: false, title: '角色名称' }, { field: 'RoleType', hidden: false, title: '角色类型' },
+                   { field: 'Descs', hidden: false, title: '描述' }, { field: 'CreateId', hidden: true, title: '创建人' }, { field: 'CreateDate', hidden: false, title: '创建日期' },
+                   { field: 'UpdateId', hidden: true, title: '更新人' }, { field: 'UpdateDate', hidden: false, title: '更新日期' }
+                ]],
+                onEnter: function (val) {
+                    $.easyui.loading({ msg: '正在为当前用户设置角色……', locale: '#UsersListPanel' });
+                    var roleIds = "";
+                    $.each(val, function (i, n) {
+                        debugger;
+                        roleIds += n["Id"];
+                        if (i < val.length - 1)
+                            roleIds += ",";
+                    });
+                    if ($("#GridUser").datagrid('getSelections').length == 1 && val.length > 0) {
+                        var userId = $("#GridUser").datagrid('getSelections')[0]["Id"];
+                        $.ajax({
+                            type: "get",
+                            url: "/Main/UserRoleListAdd/?&userId=" + userId +"&roleIds=" + roleIds + "&rod=" + Math.floor(Math.random() * 1000),//动态加载表单
+                            success: function (data) {
+                                var obj = $.string.toObject(data);
+                                if (obj.result == "True") {
+                                    $.messager.show({ msg: "用户设置角色成功！", position: 'topRight' });
+                                    $("#GridUserRole").datagrid('reload');
+                                    $.easyui.loaded('#UsersListPanel');
+                                }
+                                else {
+                                    $.messager.show({ msg: "很抱歉，用户设置角色失败！", position: 'topRight' });
+                                    $.easyui.loaded('#UsersListPanel');
+                                }
+                            },
+                            error: function (ex) {
+                                $.messager.show({ msg: "操作失败，请联系管理员！", position: 'topRight' });
+                                $.easyui.loaded('#UsersListPanel');
+                            }
+                        });
+                    }
+                    else {
+                        $.easyui.loaded('#UsersListPanel');
+                    }
+                },
+                onLoadSuccess: function (data) {
+                    debugger;
+                    $(".TriRowLastMenu").linkbutton({ plain: true });
+                    $(this).datagrid('getPager').pagination({ beforePageText: '第', afterPageText: '页    共 {pages} 页', displayMsg: '当前:从{from}到{to} 总数：{total}' });
+                },
+                onLoadError: function () {
+                    $(this).datagrid('loadData', null);
+                    $(this).datagrid('getPager').pagination({ beforePageText: '', afterPageText: '', displayMsg: '非常抱歉，没有找到数据！' });
+                }
+            };
+            $.easyui.showGridSelector($.extend(opts, { pagination: true, pageSize: 20, left: 100000, top: 0 }));
+        });
+
+        //Delete Role
+        $("#DeleteUsers").click(function () {
+            if ($("#GridUser").datagrid('getSelections').length != 1) {
+                $.messager.show({ msg: "须选择一个用户，再进行角色配置！", position: 'topRight' });
+                return false;
+            }
+
+            var selectobj = $("#GridUserRole").datagrid("getSelections");
+
+            var Id = "";
+            if (selectobj.length < 1) {
+                $.messager.show({ msg: "请先选择一个角色，再进行移除！", position: 'topRight' });
+                return false;
+            }
+            else {
+
+                MapId = $.each(selectobj, function (i, n) {
+                    if (Id != "")
+                        Id += ",";
+                    Id += "'" + eval("n." + $("#GridUserRole").datagrid("options").columns[0][0].field) + "'";
+
+                });
+            }
+
+            if (Id.split(',').length < 1)
+                return false;
+
+            $.easyui.loading({ msg: '正在移除当前用户角色……', locale: '#UsersListPanel' });
+            $.ajax({
+                type: "POST",
+                url: "/Main/DelteData/?Id=" + Id + "&TableName=SysUserRole&anticache=" + Math.floor(Math.random() * 1000),//动态加载表单
+                // data: d.form("getData"),
+                success: function (data) {
+                    var obj = eval("(" + data + ")");
+                    if (obj.result = true) {
+                        $.easyui.loaded('#UsersListPanel');
+                        $.messager.show({ msg: "移除完成！", position: 'topRight' });
+                        $('#GridUserRole').datagrid('reload');
+                    }
+                    else {
+                        //$.messager.alert("操作提醒", obj.msg, "warning", function () { $.messager.progress('close'); });
+                        $.easyui.loaded('#UsersListPanel');
+                        $.messager.show({ msg: "移除失败！", position: 'topRight' });
+                        return false;
+                    }
+                }
+            });
+
+        });
+
+    });    
+   
+</script>
+
+}
+<div id="FirstPanel" class="easyui-panel" style="padding: 5px; background: #fafafa; " data-options="border:false,fit:true">
+
+    <div id="paneltab" class="easyui-layout" style="padding:3px;background:#fafafa;" data-options="border:false,iconCls:'icon-save',closable:true,collapsible:true,minimizable:true,maximizable:true,fit:true">
+
+
+
+        <div id="FunctionSetDiv" data-options="region: 'center', split: true" style="padding: 1px;">
+            @Html.Raw(ViewData["Grid1"])
+        </div>
+
+        <div id="UsersListPanel" data-options="region: 'east', split: true, collapsed:true,title: '所属角色设置'" style="width: 350px;">
+
+            <div id="paneltabLeft" class="easyui-layout" style="padding:0px;background:#fafafa;" data-options="border:false,iconCls:'icon-save',split:false,closable:false,collapsible:false,minimizable:false,maximizable:false,fit:true">
+
+                <div data-options="region: 'north', split: false, title: ''" style="height: 37px; border: 0px; padding: 0px;">
+                    <span class="easyui-toolbar">
+                        <a id="AddUsers" class="easyui-linkbutton" data-options="plain: true, iconCls: 'icon-munich-plus'">选择角色</a>
+                        <span>-</span>
+                        <a id="DeleteUsers" class="easyui-linkbutton" data-options="plain: true, iconCls: 'icon-munich-bank',onClick:function(){}">移除角色</a>
+                    </span>
+                </div>
+
+                <div id="UserRolePanel" data-options="region: 'center', split: false, title: '',fit:true" style="border: 0px; padding:1px;">
+                    @Html.Raw(ViewData["Grid2"])
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

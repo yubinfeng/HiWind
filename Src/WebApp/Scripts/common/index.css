@@ -1,0 +1,53 @@
+﻿body { font-size: 14px; padding: 0; margin: 0; overflow: hidden;
+    SCROLLBAR-FACE-COLOR: #ccd8f4;
+	SCROLLBAR-TRACK-COLOR: #FFFFFF;
+	SCROLLBAR-BASE-COLOR: #FFFFFF;
+	SCROLLBAR-SHADOW-COLOR: #FFFFFF;
+	SCROLLBAR-DARKSHADOW-COLOR: #FFFFFF;
+	SCROLLBAR-ARROW-COLOR:#4868B5;
+}
+.top-bar { position: absolute; width: 100%; height: 52px; top: 0; left: 0; }
+.top-bar-left { position: absolute; width: 500px; height: 52px; }
+.top-bar-right { position: absolute; width: 400px; height: 52px; right: 0; }
+.top-bar-right #timerSpan { position: absolute; padding-top: 5px; right: 10px; }
+.top-bar-right #themeSpan { position: absolute;  width: 350px; top: 24px; right: 5px; text-align: right; }
+
+.top-toolbar { position: absolute; font-weight: normal;  padding: 0; width: 100%; height: 30px; top: 150px; left: 0; border-top-width: 1px; border-bottom-width: 0; z-index: 100; }
+.top-toolbar-topmost { top: 0px; height: 30px; border-top-width: 0px; border-bottom-width: 1px; }
+.top-toolbar #infobar { position: absolute; height: 29px; line-height: 29px; left: 10px; }
+.top-toolbar #searchbar { position: absolute; height: 29px; left: 400px; padding-top: 1px; }
+.top-toolbar #buttonbar { position: absolute; height: 29px; right: 5px; padding-top: 1px; text-align: right; }
+
+#navMenu_list { padding: 0px; margin: 0px; }
+#navMenu_list>li { line-height: 35px; list-style-type: none; }
+#navMenu_list>li>div.panel-header { height: 30px; line-height:30px;  padding: 0; margin: 0; font-weight: normal; border-top-width: 1px; border-bottom-width: 0; }
+#navMenu_list>li:first-child>div.panel-header { border-top-width: 0;cursor: pointer;  }
+#navMenu_list>li>div.panel-header a { width: 100%; height: 100%; color: inherit; text-decoration: none; display: inline-block; padding: 0; margin: 0; }
+
+.nav-menu { vertical-align: middle; }
+.nav-menu>* { padding-left: 10px; }
+.nav-menu-icon { padding-left: 25px; background-position: left center; }
+
+.tabs-container .tabs-header .tabs-scroller-left { border-top-width: 0; border-left-width: 0; }
+.tabs-container .tabs-header .tabs-scroller-right { border-top-width: 0; border-right-width: 0; }
+.tabs-container .tabs-tool { border-top-width: 0; border-right-width: 0; }
+.tabs-tool table { border-width: 0; border-collapse: collapse; border-spacing: 0; }
+.tabs-tool table td { padding: 0; }
+
+/*限制 easyui-tabs 选项卡页签的宽度*/
+/*.tabs-container .tabs-header .tabs-wrap .tabs li a.tabs-inner { max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }*/
+
+#eastLayout>div.layout-panel-center>div.panel-header { border-top-width: 0; }
+
+.portlet-list { padding-left: 10px; margin: 5px; line-height:25px; }
+
+.donate-name {
+    font-weight: bold; line-height: 14px; background-color: rgb(70, 136, 71); color: #fff;
+    padding-top: 2px; padding-bottom: 2px; padding-left: 4px; padding-right: 4px; border-radius: 3px;
+}
+.donate-date { padding: 5px; }
+.donate-total { font-weight: bold; color: Red; }
+
+ul.link-list>li>a { padding-left: 10px; white-space: nowrap; }
+
+div.hidden { visibility: hidden; overflow: hidden; }

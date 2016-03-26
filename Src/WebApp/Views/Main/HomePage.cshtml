@@ -1,0 +1,249 @@
+﻿<!--Title-->
+@{
+    string SystemName = "数据库连接失败，请联系管理员！";
+    string LogoImg;
+    try
+    {
+        SystemName = new HiWind.EasyUI.Config().GetConfigModel().SystemName;
+        LogoImg =  new HiWind.EasyUI.Config().GetConfigModel().LogoImg;
+    }
+    catch (Exception ex) { }
+    ViewBag.Title = SystemName;
+}
+
+<!--Head-->
+@section Head{
+    <script src="/UserScript/Search.min.js"></script>
+    <!--Print for Lodop-->
+    <script src="/Scripts/LodopFuncs.js"></script>
+    <!--Chart for Highcharts-->
+    <script src="/Scripts/Highcharts-4.1.5/js/highcharts.js"></script>
+    <style type="text/css">   
+       .STYLE1 {color: #000000;}  
+       .gridpanel {border-right: 1px dotted transparent;border-bottom: 1px dotted transparent;}
+    </style>
+}
+
+<div id="codepanel" style="display:none"></div>
+<div id="panelTab" class="easyui-layout" style="padding: 5px 5px 5px 5px; " data-options="border:false,iconCls:'icon-save',closable:true,collapsible:true,minimizable:true,maximizable:true,fit:true,onResize:function(w,h){$('#HomeId').css('margin-right':5)}">
+    
+    <table border="0" id="HomeId" cellpadding="1" cellspacing="1" style="background:#CCCCCC;width:100%;">
+      
+       
+<tr>
+            <td width="100%" height="50" align="center" bgcolor="#DCE8FA" style="font-size:16ppx;">车辆概况统计</td>
+          
+        </tr>
+        
+        <tr>
+            <td height="30" colspan="8" align="center" bgcolor="#DCE8FA">
+
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td bgcolor="#FFFFFF">  <div id="Char1" style="min-width: 300px; height: 300px; "></div></td>
+                        <td bgcolor="#FFFFFF">  <div id="Char2" style="min-width: 300px; height: 300px; "></div></td>
+                        <td bgcolor="#FFFFFF">  <div id="Char3" style="min-width: 300px; height: 300px; "></div></td>
+                    </tr>
+                </table>
+
+                <script>
+
+                    // Radialize the colors
+                    Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+                        return {
+                            radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+                            stops: [
+                                [0, color],
+                                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+                            ]
+                        };
+                    });
+
+                    // Build the chart
+                    $('#Char1').highcharts({
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false
+                        },
+                        credits: false,
+                        title: {
+                            text: '车辆类别分布情况'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                    style: {
+                                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                    },
+                                    connectorColor: 'silver'
+                                }
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: '类别',
+                            data: [
+                                ['大型客车', 141],
+                                ['牵引车', 26],
+                                {
+                                    name: '城市公交车',
+                                    y: 454,
+                                    sliced: true,
+                                    selected: true
+                                },
+                                ['中型客车', 120],
+                                ['大型货车', 62],
+                                ['小型汽车', 77]
+                            ]
+                        }]
+                    });
+
+                    //char2
+
+                    $('#Char2').highcharts({
+                        chart: {
+                            type: 'bar'
+                        },
+                        credits: false,
+                        title: {
+                            text: '车辆维修类别统计'
+                        },
+                        subtitle: {
+                            text: ''
+                        },
+                        xAxis: {
+                            categories: ['发动机系统', '底盘系统', '空调电器系统', '车身系统'],
+                            title: {
+                                text: null
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '数量（单位：辆）',
+                                align: 'high'
+                            },
+                            labels: {
+                                overflow: 'justify'
+                            }
+                        },
+                        tooltip: {
+                            valueSuffix: ' millions'
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            x: -20,
+                            y: 40,
+                            floating: true,
+                            borderWidth: 1,
+                            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+                            shadow: true
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: [{
+                            name: '中型车',
+                            data: [107, 31, 635, 203]
+                        }, {
+                            name: '大型车',
+                            data: [133, 156, 947, 408]
+                        }, {
+                            name: '小型车',
+                            data: [973, 914, 4054, 732]
+                        }]
+                    });
+
+
+                    $('#Char3').highcharts({
+                        chart: {
+                            type: 'column'
+                        },
+                        credits: false,
+                        title: {
+                            text: '车辆技术等级统计'
+                        },
+                        subtitle: {
+                            text: ''
+                        },
+                        xAxis: {
+                            categories: [
+								'一级',
+								'二级',
+								'三级',
+								'四级'								
+                            ],
+                            crosshair: true
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '数量 （单位：辆）'
+                            }
+                        },
+                        tooltip: {
+                            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+								'<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                            footerFormat: '</table>',
+                            shared: true,
+                            useHTML: true
+                        },
+                        plotOptions: {
+                            column: {
+                                pointPadding: 0.2,
+                                borderWidth: 0
+                            }
+                        },
+                        series: [{
+                            name: '2010',
+                            data: [111,254,254,669]
+
+                        }, {
+                            name: '2012',
+                           data: [144,244,477,567]
+
+                        }, {
+                            name: '2014',
+                            data: [223,10,452,477]
+
+                        }, {
+                            name: '2016',
+                           data: [77,588,566,754]
+
+                        }]
+                    });
+
+                </script>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="100%" height="30" align="center" bgcolor="#DCE8FA">&nbsp;</td>
+          
+        </tr>
+          
+
+        <tr style="height:150">
+            <td height="50" colspan="8" align="center" bgcolor="#B8EBF8"><strong>技术支持： 于斌锋 QQ：3966131 电话：18049454500</strong></td>
+        </tr>
+    </table>  
+
+</div>

@@ -1,0 +1,137 @@
+﻿<!--Title-->
+@{    
+    string SystemName = "数据库连接失败，请联系管理员！";
+    string LogoImg = "";
+    try
+    {
+        SystemName = new HiWind.EasyUI.Config().GetConfigModel().SystemName;
+        LogoImg =  new HiWind.EasyUI.Config().GetConfigModel().LogoImg;
+        HiWind.EasyUI.Authorization bllAu = new HiWind.EasyUI.Authorization();
+    }
+    catch (Exception ex)    {}
+    ViewBag.Title = SystemName;
+}
+
+<!--Head-->
+@section Head{
+    <!--impot other extensions-->
+    <script src="/Scripts/jeasyui-extensions/jquery-easyui-toolbar/jquery.toolbar.js" type="text/javascript"></script>
+    <script src="/Scripts/jeasyui-extensions/jeasyui.extensions.combogrid.js" type="text/javascript"></script>
+    <script src="/Scripts/jeasyui-extensions/jeasyui.extensions.gridselector.js" type="text/javascript"></script>
+    <script src="/Scripts/jeasyui-extensions/jquery-easyui-comboselector/jquery.comboselector.js" type="text/javascript"></script>
+    <script src="/Scripts/jeasyui-extensions/jeasyui.extensions.icons.js" type="text/javascript"></script>
+    <script src="/Scripts/jeasyui-extensions/jquery-easyui-comboicons/jquery.comboicons.js" type="text/javascript"></script>    
+    <!--other extensions-->
+    <script src="/Scripts/common/plugin-import.js"></script>  
+    <!--Print for Jquery.print-->
+     <!--script src="/Scripts/jQuery.print.js" type="text/javascript"></!--script-->
+    <!--Print for Lodop-->
+    <script src="/Scripts/LodopFuncs.js" type="text/javascript"></script>
+    <!--Import js\css for homepage-->
+    <script src="/UserScript/Main.min.js"></script>
+    <link href="/Scripts/common/index.css" rel="stylesheet" />
+    <script src="/Scripts/common/index-startup.js"></script>
+    <!--Instant messaging -->
+    <script src="~/Scripts/jquery.signalR-2.0.3.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">$(function () {try {var MyId = "@Html.Raw(Session["UserId"].ToString().Trim())";/*加载即时通讯*/SignalRJs(MyId);}catch (e) { }});</script>
+}
+
+<!--Body-->
+<div id="maskContainer">
+    <div class="datagrid-mask" style="display: block;"></div>
+    <div class="datagrid-mask-msg" style="display: block; left: 50%; margin-left: -52.5px;">
+        正在加载...
+    </div>
+</div>
+
+<div id="mainLayout" class="easyui-layout hidden" data-options="fit: true" >
+
+    <div id="northPanel" data-options="region: 'north', border: false" style="height: 117px; overflow: hidden;">
+        <div id="head-top-logo2" data-options="region: 'north', border: false,fig:true" style="height:85px;">
+            <table width="100%" height="85" border="0" cellpadding="0" cellspacing="0" id="headtoptable" style="background-image: url('/Images/Logo/Logo.jpg')">
+                <tr>
+                    <td valign="top"   height="90">
+                        <table width="100%" border="0">
+                            <tr style="height:25px">
+                                <td height="25" align="right" >
+                                    <span id="timerSpan" ></span>&nbsp;&nbsp;<span class="icon-hamburg-user" >&nbsp;&nbsp;</span> <span  class="UserInfo" id="userinfo" ></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">
+                                    <div id="buttonbar" style="margin-top:10px">
+                                        <a id="btnFullScreen" class="easyui-linkbutton" data-options="plain: false, iconCls: 'icon-standard-arrow-inout'"><span class="MenuTopRightAndUserInfo">全屏切换</span></a>
+                                        <a id="btnEditPass" class="easyui-linkbutton" data-options="plain: false, iconCls: 'icon-standard-key'" onClick="ShowFormEdit('密码修改', 'icon-standard-key', 'SysUser', 'SysForm00000080', ' @Html.Raw(Session["UserId"].ToString())', 620, 200, '{}') "><span class="MenuTopRightAndUserInfo">修改密码</span></a>
+                                        <a id="btnMessage" class="easyui-linkbutton" data-options="plain: false, iconCls: 'icon-standard-shape-rotate-anticlockwise'" onClick="ShowFormAdd('即时通信', 'icon-hamburg-email', 'SysForm00000085', 770, 479, '{}') "><span class="MenuTopRightAndUserInfo">即时通讯</span></a>
+                                        <a id="btn3" class="easyui-linkbutton" data-options="plain: false, iconCls: 'icon-standard-help'" onClick="@Html.Raw("window.open('/Content/"+ViewData["UserType"]+".docx')")" ><span class="MenuTopRightAndUserInfo">系统帮助</span></a>
+                                        <a id="btnExit" class="easyui-linkbutton" data-options="plain: false, iconCls: 'icon-hamburg-sign-out'"><span class="MenuTopRightAndUserInfo">退出系统</span></a>
+                                        <a id="btnShowNorth" class="easyui-linkbutton" data-options="plain: false, iconCls: 'layout-button-down'" style="display: none;"><span class="MenuTopRightAndUserInfo">展开</span></a>
+                                        <a id="btnHideNorth" class="easyui-linkbutton" data-options="plain: false, iconCls: 'layout-button-up'"><span class="MenuTopRightAndUserInfo">向上折叠</span></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>                    </td>
+                    <td width="31" valign="top"  style="margin-top:0px">&nbsp;</td>
+                </tr>  
+                <tr>
+                    <td height="84" colspan="5" valign="top">@Html.Raw(ViewData["HeadMenu"])</td>
+                </tr>                          
+            </table>
+        </div>       
+    </div>    
+
+    <div data-options="region: 'west', title: ' @Html.Raw("当前用户：" + ViewData["UserFullName"] + "(" + ViewData["UserName"]+")")', iconCls: 'icon-standard-time', split: true, minWidth: 250, maxWidth: 500" style="width: 250px; padding: 1px;">
+
+            <div  id="westLayout" class="easyui-layout" data-options="fit: true" >
+                <div data-options="region: 'center', border: false" style="border-bottom-width: 1px;">
+                    <div id="westCenterLayout" class="easyui-layout" data-options="fit: true" >
+                        <div data-options="region: 'north', split: false, border: false" style="height: 33px;">
+                            <div class="easyui-toolbar" style="background-color:#E2EDFF;">
+                                <a id="navMenu_refresh" class="easyui-linkbutton easyui-tooltip" title="刷新该选项卡及其导航菜单" data-options="plain: true, iconCls: 'icon-hamburg-refresh'"> 刷新 </a>
+                                <a id="navMenu_expand" class="easyui-splitbutton" data-options="iconCls: 'icon-metro-expand2', menu: '#navMenu_toggleMenu'"> 展开 </a>
+                                <div id="navMenu_toggleMenu" class="easyui-menu" style="background-color:#E2EDFF;width:100px;">
+                                    <div id="navMenu_collapse" data-options="iconCls: 'icon-metro-contract2'" >折叠当前</div>
+                                    <div class="menu-sep"></div>
+                                    <div id="navMenu_collapseCurrentAll" data-options="iconCls: 'icon-metro-expand'">展开当前所有</div>
+                                    <div id="navMenu_expandCurrentAll" data-options="iconCls: 'icon-metro-contract'">折叠当前所有</div>
+                                    <div class="menu-sep"></div>
+                                    <div id="navMenu_collapseAll" data-options="iconCls: 'icon-standard-arrow-out'">展开所有</div>
+                                    <div id="navMenu_expandAll" data-options="iconCls: 'icon-standard-arrow-in'">折叠所有</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-options="region: 'center', border: false" style="background-color:#E2EDFF;">
+                            <ul id="navMenu_Tree" style="padding-top: 8px; padding-bottom: 8px; height: 35px;font-size:15PX;"></ul>
+                        </div>
+                    </div>
+                </div>
+                             
+                <div id="westSouthPanel"  data-options="region: 'south', border: false, split: true, minHeight: 32, maxHeight: 275" style="height: 275px;border-top-width: 1px;font-size: 15px;">
+                    <ul id="navMenu_list" style="font-size:15px;"></ul>
+                </div>             
+            </div>
+
+    </div>
+       
+    <div data-options="region: 'center',fig:true" style="padding: 0px;border:0px;">
+        <div id="mainTabs_tools" class="tabs-tool">
+            <table>
+                <tr>
+                    <td><a id="mainTabs_jumpTab" class="easyui-linkbutton easyui-tooltip" title="在新页面中打开该选项卡" data-options="plain: true, iconCls: 'icon-standard-shape-move-forwards'"></a></td>
+                    <td><a id="mainTabs_closeAll" class="easyui-linkbutton easyui-tooltip" title="关闭所有选项卡" data-options="plain: true, iconCls: 'icon-standard-cross'"></a></td>
+                </tr>
+            </table>
+        </div>
+        <div id="mainTabs" class="easyui-tabs" data-options="fit: true, border: true, showOption: true, enableNewTabMenu: true, tools: '#mainTabs_tools', enableJumpTabMenu: true">
+        </div>
+    </div>
+    
+
+    <div data-options="region: 'south', title: '', iconCls: 'icon-standard-information', collapsed: false, border: false" style="height: 30px; background-color: #e0ecff">
+        <div id="footer" style="color: #4e5766; padding: 6px 0px 0px 0px; margin: 0px auto; text-align: center; font-size:12px; font-family:微软雅黑;">
+            (C)2014-2016 Copyright: Xi'an Co., LTD.
+        </div>
+    </div>   
+
+</div>

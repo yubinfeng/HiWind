@@ -1,0 +1,434 @@
+﻿<!--Title-->
+@{
+    string SystemName = "数据库连接失败，请联系管理员！";
+    try
+    {
+        SystemName = new HiWind.EasyUI.Config().GetConfigModel().SystemName;
+    }
+    catch (Exception ex) { }
+    ViewBag.Title = SystemName;
+}
+
+<!--Head-->
+@section Head{
+  
+    <!--Other extensions-->
+    <script src="/Scripts/jeasyui-extensions/jquery-easyui-toolbar/jquery.toolbar.js" type="text/javascript"></script>
+    <script src="/Scripts/jeasyui-extensions/jeasyui.extensions.combogrid.js" type="text/javascript"></script>
+    <script src="/Scripts/jeasyui-extensions/jeasyui.extensions.gridselector.js" type="text/javascript"></script>
+    <script src="/Scripts/jeasyui-extensions/jquery-easyui-comboselector/jquery.comboselector.js" type="text/javascript"></script>
+    <script src="/Scripts/jeasyui-extensions/jeasyui.extensions.icons.js" type="text/javascript"></script>
+    <script src="/Scripts/jeasyui-extensions/jquery-easyui-comboicons/jquery.comboicons.js" type="text/javascript"></script>    
+    <!--Import plugin-->
+    <script src="/Scripts/common/plugin-import.js"></script> 
+
+    <script type="text/javascript">
+        $(function () {          
+
+            //Use Enter 
+            document.onkeydown = function () {
+                var keycode = event.keyCode;
+                var keyChar = String.fromCharCode(keycode);
+                if (keycode == 13)
+                    $('#SearchGrid').treegrid('reload', SearchWhere());
+            };
+
+            //Search List
+            $("#SearchGrid").treegrid({
+                toolbar: "#btnDiv",
+                fit: true,
+                method: "get",
+                url: "/HiWind/GetMenusSearch/?rod=" + Math.floor(Math.random() * 1000),
+                //queryParams: SearchWhere(),
+                onLoadSuccess: function (data){},
+                //offset: {
+                //    width: 0,
+                //    height: -($("#btnDiv").panel().height() +25)
+                //},
+                idField: 'Id',
+                treeField: 'MenuName',
+                fitColumns: true,
+                rownumbers: true,              
+                frozenColumns: [[
+                    { field: 'ck', checkbox: true },
+                    { field: 'Id', title: '编号' },
+                    { field: 'MenuName', title: '菜单名称'}
+                ]],
+                columns: [[                    
+                    { field: 'MenuIcon', title: '图标'},
+                    { field: 'MenuOrder', title: '排序' },
+                    { field: 'MenuUrl', title: 'Url地址' },
+                    { field: 'MenuParentId', title: '上级编号' },   
+                    { field: 'MenuStatus', title: '状态' },
+                    { field: 'CreateDate', title: '创建日期' },
+                    { field: 'UpdateDate', title: '更新日期' }
+                ]],
+                autoBindDblClickRow: false,
+               selectOnRowContextMenu: true     
+        });
+
+            $('#SearchGrid').treegrid('getPager').pagination({
+            beforePageText: '第',
+            afterPageText: '页    共 {pages} 页',
+            displayMsg: '当前显示:从{from}到{to}   记录总数：共{total}记录'
+        });
+
+
+
+        //Search triggerkey
+        $("#SearchButton").click(function () {$('#SearchGrid').treegrid('reload', SearchWhere());});
+
+        //Delete triggerkey
+        $("#ClearButton").click(function () {$("#SearchForm").form("clear");});
+
+        //Add  triggerkey
+        $("#AddButton").click(
+
+           function () {
+
+               var dg= $.easyui.showDialog({
+                   title: $(this).linkbutton('options')['text'],
+                   iconCls: $(this).linkbutton('options')['iconCls'],
+                    width: 957, height: 347, topMost: false,
+                    minWidth: 400, minHeight: 300,
+                    href: "/HiWind/AddForm/?SearchId=@Html.Raw(ViewData["SearchId"])&TableName=@Html.Raw(ViewData["TableName"])&FormId=@Html.Raw(ViewData["FormId"])&anticache=" + Math.floor(Math.random() * 1000),//动态加载表单
+                    closeButtonText: "取消",
+                    enableSaveButton: false,
+                    saveButtonText: "保存",
+                    enableApplyButton: false,
+                    autoCloseOnEsc: true,
+
+                    buttons: [
+                        {
+                            text: "保存表单", iconCls: "icon-save", handler: function (d) {
+                                var isValid = d.form("validate");
+                                $.messager.progress({ text: "" + "新增表单" + "  正在保存中……", width: 150, height: 20 });	
+                                if (isValid) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/HiWind/MenuAddSave/?SearchId=@Html.Raw(ViewData["SearchId"])&TableName=@Html.Raw(ViewData["TableName"])&FormId=@Html.Raw(ViewData["FormId"])&anticache=" + Math.floor(Math.random() * 1000),//动态加载表单
+                                        data: d.form("getData",{onlyEnabled :false}),
+                                        success: function (data) {
+                                            var obj = eval("(" + data + ")");
+                                            if (obj.result = true) {                               
+                                                $.messager.progress('close');	
+                                                $(dg).dialog("close",true);
+                                                $.messager.alert(obj.msg, function () { $('#SearchGrid').treegrid('reload', { rod: Math.random() }); });
+                                            }
+                                            else {
+                                                $.messager.alert("操作提醒", obj.msg, "warning", function () { $.messager.progress('close'); });
+                                                return false;
+                                            }
+                                        }
+                                    });
+
+                                } else {
+
+                                    $.messager.alert("操作提醒", "校验失败！", "warning", function () { $.messager.progress('close'); });
+                                    return false;
+                                }
+
+                            }
+
+                        },
+                        {text: "获取表单值（测试用）", iconCls: "icon-hamburg-sitemap", handler: function (d) {$.easyui.showOption(d.form("getData"));}}
+                    ]
+                });
+            }
+        );
+
+        //Update  triggerkey
+        $("#EditButton").click(
+            function () {
+
+                var Id = "";
+                var obj = $("#SearchGrid").treegrid("getSelections");
+                if (obj.length < 1) {
+                    $.messager.alert("操作提醒", "请选择一条记录，再进行修改操作！", "warning");
+                    return false;
+                }
+                else if (obj.length > 1) {
+                    $.messager.alert("操作提醒", "只能请选择一条记录，进行修改操作！", "warning");
+                    return false;
+                }
+                else
+                    Id = obj[0].Id;
+
+            var dgg= $.easyui.showDialog({
+                    title: $(this).linkbutton('options')['text'],
+                    iconCls: $(this).linkbutton('options')['iconCls'],
+                    width: 957, height: 347, topMost: false,
+                    minWidth: 400, minHeight: 300,
+                    href: "/HiWind/EditForm/?Id=" + Id + "&SearchId=@Html.Raw(ViewData["SearchId"])&TableName=@Html.Raw(ViewData["TableName"])&FormId=@Html.Raw(ViewData["FormId"])&anticache=" + Math.floor(Math.random() * 1000),//动态加载表单
+                    closeButtonText: "取消",
+                    enableSaveButton: false,
+                    saveButtonText: "保存",
+                    enableApplyButton: false,
+                    autoCloseOnEsc: true,
+                    onOpen: function () {
+                        $.easyui.loading({ msg: "正在加载中，请稍候..." });
+                    },
+                    onLoad: function (d) {
+                        //调看事务
+                        $.ajax({
+                            type: "POST",
+                            url: "/HiWind/GetFormData/?Id=" + Id + "&SearchId=@Html.Raw(ViewData["SearchId"])&TableName=@Html.Raw(ViewData["TableName"])&FormId=@Html.Raw(ViewData["FormId"])&anticache=" + Math.floor(Math.random() * 1000),//动态加载表单
+                            data: dgg.form("getData", { onlyEnabled: false }),
+                            success: function (data) {
+                                if (data != "") {
+                                    var obj = eval("(" + data + ")");
+                                    $('#EditForm').form('load', obj);
+                                    if (obj.SysMenus_MenuParentId == "0") {
+                                        FormChange("顶级菜单");
+                                        $("#SysMenus1_MenuTyep1").combobox("setValue", "顶级菜单");
+                                    }
+                                    else if (obj.SysMenus_MenuUrl == "") {
+                                        FormChange("子菜单");
+                                        $("#SysMenus1_MenuTyep1").combobox("setValue", "子菜单");
+                                    }
+                                    else {
+                                        FormChange("节点");
+                                        $("#SysMenus1_MenuTyep1").combobox("setValue", "节点");
+                                    }
+                                }
+                                else {
+                                    $.messager.alert("操作提醒", "调看失败！", "warning");
+                                }
+                                $.easyui.loaded();
+                            },
+                            error: function (ex) {
+                                $.messager.alert("操作提醒", "调看失败！", "warning");
+                                $.easyui.loaded();
+                            }
+                        });
+
+                    },
+                    buttons: [
+                            {
+                            text: "保存表单", iconCls: "icon-save", handler: function (d) {
+                                var isValid = d.form("validate");
+                                $.messager.progress({ text: "" + "修改表单" + "  正在保存中……", width: 150, height: 20 });	
+                                if (isValid) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/HiWind/MenuEditSave/?Id=" + Id + "&SearchId=@Html.Raw(ViewData["SearchId"])&TableName=@Html.Raw(ViewData["TableName"])&FormId=@Html.Raw(ViewData["FormId"])&anticache=" + Math.floor(Math.random() * 1000),//动态加载表单
+                                        data: d.form("getData", { onlyEnabled: false }),
+                                        success: function (data) {
+                                            var obj = eval("(" + data + ")");
+                                            if (obj.result = true) {                     
+                                                $.messager.progress('close');
+                                                $(dgg).dialog("close",true);
+                                                $.messager.alert(obj.msg, function () { $('#SearchGrid').treegrid('reload', { rod: Math.random() }); });                                               
+                                            }
+                                            else {
+                                                $.messager.alert("操作提醒", obj.msg, "warning", function () { $.messager.progress('close'); });
+                                                return false;
+                                            }
+                                        }
+                                    });
+
+                                } else {
+
+                                    $.messager.alert("操作提醒", "校验失败！", "warning", function () { $.messager.progress('close'); });
+                                    return false;
+                                }
+                            }
+                        },
+                        {text: "获取表单值（测试用）", iconCls: "icon-hamburg-sitemap", handler: function (d) { $.easyui.showOption(d.form("getData")); }},
+                        { text: "获取表单值（测试用）", iconCls: "icon-hamburg-sitemap", handler: function (d) { $.easyui.showOption(d.form("getData")); } }
+                    ]
+                });
+            }
+        );
+
+        //Clone  triggerkey
+        $("#Clone").click(
+            function () {
+                var Id = "";
+                var obj = $("#SearchGrid").treegrid("getSelections");
+                if (obj.length < 1) {
+                    $.messager.alert("操作提醒", "请先选择一条记录，再进行操作！", "warning");
+                    return false;
+                }
+                else if (obj.length > 1) {
+                    $.messager.alert("操作提醒", "只能请选择一条记录，进行操作！", "warning");
+                    return false;
+                }
+                else
+                    Id = obj[0].Id;
+
+            var dggg=    $.easyui.showDialog({
+                    title: $(this).linkbutton('options')['text'],
+                    iconCls: $(this).linkbutton('options')['iconCls'],
+                    width: 957, height: 347, topMost: false,
+                    minWidth: 400, minHeight: 300,
+                    href: "/Main/EditForm/?Id=" + Id + "&SearchId=@Html.Raw(ViewData["SearchId"])&TableName=@Html.Raw(ViewData["TableName"])&FormId=@Html.Raw(ViewData["FormId"])&anticache=" + Math.floor(Math.random() * 1000),//动态加载表单
+                    closeButtonText: "取消",
+                    enableSaveButton: false,
+                    saveButtonText: "保存",
+                    enableApplyButton: false,
+                    autoCloseOnEsc: true,
+                    onOpen: function () {
+                        $.easyui.loading({ msg: "正在加载中，请稍候..." });
+                    },
+                    onLoad: function (d) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/HiWind/GetFormData/?Id=" + Id + "&SearchId=@Html.Raw(ViewData["SearchId"])&TableName=@Html.Raw(ViewData["TableName"])&FormId=@Html.Raw(ViewData["FormId"])&anticache=" + Math.floor(Math.random() * 1000),//动态加载表单
+                            data: dggg.form("getData", { onlyEnabled: false }),
+                            success: function (data) {
+                                if (data != "") {
+                                    var obj = eval("(" + data + ")");
+                                    obj["SysMenus_MenuName"] += "_克隆副本";
+                                    $('#EditForm').form('load', obj);
+
+
+                                }
+                                else {
+                                    $.messager.alert("操作提醒", "调看失败！", "warning");
+                                }
+                                $.easyui.loaded();
+                            },
+                            error: function (ex) {
+                                $.messager.alert("操作提醒", "调看失败！", "warning");
+                                $.easyui.loaded();
+                            }
+                        });
+
+                    },
+                    buttons: [
+                        {
+                            text: "克隆", iconCls: "icon-standard-shape-ungroup", handler: function (d) {
+                                var isValid = d.form("validate");
+                                $.messager.progress({ text: "" + "修改表单" + "  正在克隆中……", width: 150, height: 20 });	
+                                if (isValid) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/HiWind/MenuAddSave/?Id=" + Id + "&SearchId=@Html.Raw(ViewData["SearchId"])&TableName=@Html.Raw(ViewData["TableName"])&FormId=@Html.Raw(ViewData["FormId"])&anticache=" + Math.floor(Math.random() * 1000),//动态加载表单
+                                        data: d.form("getData", { onlyEnabled: false }),
+                                        success: function (data) {
+                                            var obj = eval("(" + data + ")");
+                                            if (obj.result = true) {                                      
+                                                treeLoad();
+                                                $.messager.progress('close');	
+                                                $.messager.alert(obj.msg, function () { $('#SearchGrid').treegrid('reload', { rod: Math.random() }); });
+                                                 $(dggg).dialog("close",true);                                               
+                                            }
+                                            else {
+                                                $.messager.alert("操作提醒", obj.msg, "warning", function () { $.messager.progress('close'); });
+                                                return false;
+                                            }
+                                        }
+                                    });
+
+                                } else {
+                                    $.messager.alert("操作提醒", "校验失败！", "warning", function () { $.messager.progress('close'); });
+                                    return false;
+                                }
+                            }
+                        },
+                        {text: "获取表单值（测试用）", iconCls: "icon-hamburg-sitemap", handler: function (d) {$.easyui.showOption(d.form("getData"));}}
+                    ]
+                });
+            }
+        );
+
+        //Delete  triggerkey
+        $("#DeleteButton").click(function () {
+            var selectobj = $("#SearchGrid").treegrid("getSelections");
+            var Id = "";
+            if (selectobj.length < 1) {
+                $.messager.alert("操作提醒", "请先选择一条记录，再进行删除！", "warning");
+                return false;
+            }
+            else {
+
+                MapId = $.each(selectobj, function (i, n) {
+                    if ($("#SearchGrid").treegrid('getNearChildren', n.Id).length > 0) {
+                        $.messager.alert("操作提醒", "当前菜单是目录节点，不允许删除！", "warning");
+                        return false;
+                    }
+                    else {
+                        if (Id != "") {
+                            if (Id == "SysMenu001" || Id == "SysMenus00000064" || Id == "SysMenu002" || Id == "SysMenu1000") {
+                                $.messager.alert("操作提醒", "开发者平台、系统管理、系统帮助、测试菜单，不允许删除！", "warning");
+                                return false;
+                            }
+                            Id += ",";
+                        }
+                        Id += "'" + n.Id + "'";
+                    }
+
+                });
+            }
+
+
+            if (Id.split(',').length < 1)
+                return false;
+
+            $.messager.confirm("操作提醒", "您确定要删除 [" + selectobj.length + "] 个菜单？",
+                function (c) {
+                    if (c) {
+                        $.easyui.loading({ msg: "正在删除，请稍等..." });
+                        $.ajax({
+                            type: "POST",
+                            url: "/HiWind/MenuDelteData/?Id=" + Id + "&SearchId=@Html.Raw(ViewData["SearchId"])&TableName=@Html.Raw(ViewData["TableName"])&FormId=@Html.Raw(ViewData["FormId"])&anticache=" + Math.floor(Math.random() * 1000),//动态加载表单
+                            // data: d.form("getData"),
+                            success: function (data) {
+                                var obj = eval("(" + data + ")");
+                                if (obj.result = true) {
+                                    $.easyui.loaded();
+                                    $.messager.alert(obj.msg, function () { $('#SearchGrid').treegrid('reload', { rod: Math.random() }); });
+
+                                }
+                                else {
+                                    $.messager.alert("操作提醒", obj.msg, "warning", function () { $.messager.progress('close'); });
+                                    return false;
+                                }
+                            }
+                        });
+
+                    }
+                });
+        });
+
+       //Search page
+        $("#SearchPage").click(function () { $.messager.alert("操作提醒", "此功能暂未实现，敬请稍候！", "warning");});
+
+        //Form page
+        $("#FormPage").click(function () { $.messager.alert("操作提醒", "此功能暂未实现，敬请稍候！", "warning"); });
+
+        //Export data
+        $("#Excel").click(function () { $.messager.alert("操作提醒", "此功能暂未实现，敬请稍候！", "warning"); });
+
+        /*--Get TriggerKey Start--*/
+        @Html.Raw(ViewData["TriggerKeyLast"])
+        /*--Get TriggerKey End--*/
+        });
+</script>
+
+
+}
+
+<div id="panelTab" class="easyui-layout" style="padding:10px;background:#fafafa;" data-options="border:false,iconCls:'icon-save',closable:true,collapsible:true,minimizable:true,maximizable:true,fit:true">
+    
+    <div id="gridpanel" data-options=" region:'center',border:false,fit:true" style="background-color: #ffffff; overflow: hidden;">
+        <table id="SearchGrid" data-options="border:false"></table>
+    </div>
+    <div id="btnDiv" class="easyui-toolbar" data-options="border:false" style="border-bottom: 0px solid #e5e3e3; border-bottom: 1px solid #e5e3e3;height:30px;">
+            <a id="AddButton" class="easyui-linkbutton" data-options="plain: false, iconCls: 'icon-standard-add'" style="margin: 0px 3px 0px 3px; ">新增</a>
+            <a id="EditButton" class="easyui-linkbutton" data-options="plain: false, iconCls: 'icon-standard-vcard-edit'" style="margin:0px 3px 0px 3px; ">修改</a>
+            <a id="Clone" class="easyui-linkbutton" data-options="plain: false, iconCls: 'icon-standard-shape-ungroup'" style="margin:0px 3px 0px 3px; ">克隆</a>
+         <span>-</span>
+            <a id="SearchPage" class="easyui-linkbutton" data-options="plain: false, iconCls: 'icon-standard-page-white-magnify'" style="margin:0px 3px 0px 3px; ">查询页面</a>
+            <a id="FormPage" class="easyui-linkbutton" data-options="plain: false, iconCls: 'icon-standard-application-form'" style="margin:0px 3px 0px 3px; ">表单页面</a>
+         <span>-</span>
+            <a id="Excel" class="easyui-linkbutton"  data-options="plain: false, iconCls: ' icon-standard-page-white-excel'" style="margin: 0px 3px 0px 3px; ">导出</a>
+         <span>-</span>
+            <a id="DeleteButton" class="easyui-linkbutton"  data-options="plain: false, iconCls: ' icon-standard-cross'" style="margin: 0px 3px 0px 3px; ">删除</a> 
+        </div>
+
+
+</div>
+
+

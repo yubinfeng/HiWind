@@ -1,0 +1,394 @@
+﻿<!--Title-->
+@{
+    string SystemName = "数据库连接失败，请联系管理员！";
+    try
+    {
+        SystemName = new HiWind.EasyUI.Config().GetConfigModel().SystemName;
+    }
+    catch (Exception ex){}
+    ViewBag.Title = SystemName;
+}
+
+<!--Head-->
+@section Head{
+
+<!--othen extensions-->
+<script src="/Scripts/jeasyui-extensions/jquery-easyui-toolbar/jquery.toolbar.js" type="text/javascript"></script>
+<script src="/Scripts/jeasyui-extensions/jeasyui.extensions.combogrid.js" type="text/javascript"></script>
+<script src="/Scripts/jeasyui-extensions/jeasyui.extensions.gridselector.js" type="text/javascript"></script>
+<script src="/Scripts/jeasyui-extensions/jquery-easyui-comboselector/jquery.comboselector.js" type="text/javascript"></script>
+<script src="/Scripts/jeasyui-extensions/jeasyui.extensions.icons.js" type="text/javascript"></script>
+<script src="/Scripts/jeasyui-extensions/jquery-easyui-comboicons/jquery.comboicons.js" type="text/javascript"></script>    
+<!--Import othen extensions-->
+<script src="/Scripts/common/plugin-import.js"></script>  
+ <!--Print-->
+<script src="/Scripts/LodopFuncs.js"></script>
+    <style type="text/css">
+        .gridpanel {
+            border-right: 1px dotted transparent;
+            border-bottom: 1px dotted transparent;
+        }       
+    </style>
+
+<script type="text/javascript">
+
+  
+
+    function SetPanelWidth(width,height) {
+        //$("div[name='SetFunction']").css('width') = width;
+        width = width - 30;
+       // height = 150;
+        $("#FunctionMenu").panel({ width: width }); $("#FunctionSearch").panel({ width: width }); $("#FunctionForm").panel({ width: width });
+        $("#FunctionKey").panel({ width: width }); $("#FunctionOther").panel({ width: width }); $("#FunctionNav").panel({ width: width });
+       // alert(width)
+    }
+
+    $(function () {
+        
+        //初始化隐藏设置界面
+        $("#FunctionSetDiv").children("div:first").nextAll().css("display", "none");
+
+        //功能菜单
+        $("#FunctionTree").tree({
+            url: '/HiWind/FunctionTreeLoad/',
+            lines: true,
+            toggleMenu: false,
+            contextMenu: [
+                { text: "刷新", iconCls: "icon-hamburg-refresh", disabled: false, handler: function () { $("#FunctionTree").tree("reload"); } },
+                "-"
+            ],
+            autoBindDblClick: true,
+            enableContextMenu: true,
+            selectOnContextMenu: true,
+            toggleOnClick: true,
+            //dnd: false,
+            //onDragEnter: function (target, source) { return false },
+            //onDragEnter: function (target, source) { return false },
+            onDblClick: function (node) {                
+               
+            },
+            onBeforeLoad: function (node, param) {
+                $.easyui.loading({ msg: '正在加载功能……', locale: '#FunctionTreePanel' });
+            },
+            onLoadSuccess: function (node, data) {
+                $.easyui.loaded('#FunctionTreePanel');
+            },
+            onClick: function (node) {
+               
+                var FunctionT = ($(this).tree('getChildren', node.target).length > 0 ? "非节点" : "节点");               
+                //调用查询
+               
+                    //设置导航
+                    var str = "当前功能节点：<span id='FunctionSelectText'  style='font-weight: bold;	color: #990000;'>" + node.text + "</span>；功能编号：<span id='FunctionSelectId' style='font-weight: bold;	color: #990000;'>" + node.id + "</span>；功能类型：<span id='FunctionSelectType' style='font-weight: bold;	color: #990000;'>" + FunctionT + "</span>";
+                    $("#FunctionNav").html(str);                   
+
+                    if (FunctionT == "节点") {
+                        $("#FunctionSetDiv").children("div:first").nextAll().css("display", "");
+                        $("#GridMenu").datagrid('reload', { 'FunctionId': node.id + '*' });
+                        $("#GridSearch").datagrid('reload', { 'FunctionId': node.id + '*' });
+                        $("#GridForm").datagrid('reload', { 'FunctionId': node.id + '*' });
+                        $("#GridKey").datagrid('reload', { 'FunctionId': node.id + '*' });
+                        $("#GridOther").datagrid('reload', { 'FunctionId': node.id + '*' });
+                    }
+                    else {
+                       // debugger;
+                        $("#FunctionSetDiv").children("div:first").nextAll().css("display", "none");
+                    }
+                // $("#FunctionSetDiv").css('height', '1200px');
+                    $("#GridMenu").datagrid({ fit: true }); $("#GridSearch").datagrid({ fit: true }); $("#GridForm").datagrid({ fit: true });
+                    $("#GridKey").datagrid({ fit: true }); $("#GridOther").datagrid({ fit: true });
+                  
+            }
+        })
+
+
+        //功能设置
+        $("#FunctionMenu").droppable({
+            // accept: '#FunctionTreeOther',        
+            onDragEnter: function (e, source) {  },
+            onDragLeave: function (e, source) {  },
+            onDrop: function (e, source) {               
+                var FunctionSelectType = $("#FunctionSelectType").text();               
+                var FunctionUnitType = '菜单';
+                var FunctionId = $("#FunctionSelectId").text();
+                var FunctionUnitId = $("#FunctionTreeMenu").tree('getNode', source).id;
+                //debugger;
+                var nodetype = $("#FunctionTreeMenu").tree('getNode', source).type
+                obj = $("#FunctionTreeMenu").tree('getChildren', source);
+                IsNode = false;
+                $.each(obj, function (o, n) { if (n.type == 'Menu') IsNode = true; });
+                if (IsNode || nodetype!="Menu") { $.messager.alert("操作提醒", "只能添加节点菜单！", "warning"); return false; }
+                DropFunctionu_onDrop(e, source, FunctionUnitType, FunctionId, FunctionUnitId, FunctionSelectType);
+            }
+        })
+
+        $("#FunctionSearch").droppable({
+            // accept: '#FunctionTreeOther',        
+            onDragEnter: function (e, source) { },
+            onDragLeave: function (e, source) { },
+            onDrop: function (e, source) {
+                var FunctionSelectType = $("#FunctionSelectType").text();
+                var FunctionUnitType = '查询';
+                var FunctionId = $("#FunctionSelectId").text();
+                var FunctionUnitId = $("#FunctionTreeMenu").tree('getNode', source).id;
+                var nodetype = $("#FunctionTreeMenu").tree('getNode', source).type                  
+                if (nodetype != "Search") { $.messager.alert("操作提醒", "只能添加查询页面！", "warning"); return false; }
+                DropFunctionu_onDrop(e, source, FunctionUnitType, FunctionId, FunctionUnitId, FunctionSelectType);
+            }
+        })
+        $("#FunctionForm").droppable({
+            // accept: '#FunctionTreeOther',        
+            onDragEnter: function (e, source) { },
+            onDragLeave: function (e, source) { },
+            onDrop: function (e, source) {
+                var FunctionSelectType = $("#FunctionSelectType").text();
+                var FunctionUnitType = '表单';
+                var FunctionId = $("#FunctionSelectId").text();
+                var FunctionUnitId = $("#FunctionTreeMenu").tree('getNode', source).id;
+                var nodetype = $("#FunctionTreeMenu").tree('getNode', source).type
+                if (nodetype != "Form") { $.messager.alert("操作提醒", "只能添加表单页面！", "warning"); return false; }
+                DropFunctionu_onDrop(e, source, FunctionUnitType, FunctionId, FunctionUnitId, FunctionSelectType);
+            }
+        })
+        $("#FunctionKey").droppable({
+            // accept: '#FunctionTreeOther',        
+            onDragEnter: function (e, source) { },
+            onDragLeave: function (e, source) { },
+            onDrop: function (e, source) {
+                var FunctionSelectType = $("#FunctionSelectType").text();
+                var FunctionUnitType = '触发键';
+                var FunctionId = $("#FunctionSelectId").text();
+                var FunctionUnitId = $("#FunctionTreeMenu").tree('getNode', source).id;
+                var nodetype = $("#FunctionTreeMenu").tree('getNode', source).type
+                if (nodetype != "KeySearch" && nodetype != "KeyForm") { $.messager.alert("操作提醒", "只能添加触发键！", "warning"); return false; }
+                DropFunctionu_onDrop(e, source, FunctionUnitType, FunctionId, FunctionUnitId, FunctionSelectType);
+            }
+        })
+        $("#FunctionOther").droppable({
+            // accept: '#FunctionTreeOther',        
+            onDragEnter: function (e, source) { },
+            onDragLeave: function (e, source) { },
+            onDrop: function (e, source) {
+                var FunctionSelectType = $("#FunctionSelectType").text();               
+                var FunctionUnitType = '其它';
+                var FunctionId = $("#FunctionSelectId").text();
+                var FunctionUnitId = $("#FunctionTreeMenu").tree('getNode', source).id;
+                $.messager.alert("操作提醒", "未定义其它功能单元！", "warning"); return false;
+                DropFunctionu_onDrop(e, source, FunctionUnitType, FunctionId, FunctionUnitId, FunctionSelectType);
+            }    
+
+        })
+
+        //元素列表
+        $("#FunctionTreeMenu").tree({
+            url: '/main/FunctionUnitItemLoad/',
+            dataPlain:true,
+            formatter:function(node){
+                return "<div  style='' class='easyui-draggable'  >" + node.text + "</div>";
+            },
+            lines: true,
+            toggleMenu: false,
+            contextMenu: [
+                { text: "刷新", iconCls: "icon-hamburg-refresh", disabled: false, handler: function () { $("#FunctionTreeMenu").tree("reload"); } },      
+                "-"
+            ],
+            autoBindDblClick: true,
+            enableContextMenu: true,
+            selectOnContextMenu: true,
+            toggleOnClick: true,
+            dnd: true,
+            onDragEnter: function (target, source) { return false },
+            onDragEnter: function (target, source) { return false },
+            onDblClick: function (node) {                
+               
+            },
+            onBeforeLoad: function (node, param) {
+                $.easyui.loading({ msg: '正在加载功能元素……', locale: '#FunctionUnitPanel' });
+            },
+            onLoadSuccess: function (node, data) {
+                $.easyui.loaded('#FunctionUnitPanel');
+            }
+        });
+
+    });
+    //到放置区内
+    function DropFunction_onDragEnter(e, source) {
+
+    }
+    //离开
+    function DropFunction_onDragLeave(e, source) {
+
+    }
+    //放入到放置区
+    function DropFunctionu_onDrop(e, source, FunctionUnitType, FunctionId, FunctionUnitId,FunctionSelectType) {
+        if (FunctionSelectType != "节点") {
+            $.messager.alert("操作提醒", "必须选择左边功能树节点后（注意：必须选择节点，不能选择目录！），才能进行功能单元设置！", "warning");
+            return false;
+        }       
+        var GridName = "";
+        var Info = "正在设置功能单元（" + FunctionUnitType + "），请稍等……";
+        $.easyui.loading({ msg: Info});        
+        switch (FunctionUnitType) {
+            case "菜单":
+                {
+                    GridName = "GridMenu";
+                    break;
+                }
+            case "查询":
+                {
+                    GridName = "GridSearch";
+                    break;
+                }
+            case "表单":
+                {
+                    GridName = "GridForm";
+                    break;
+                }
+            case "触发键":
+                {
+                    GridName = "GridKey";
+                    break;
+                }
+            default:
+                {
+                    GridName = "GridOther";
+                    break;
+                }
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/Main/FunctionListAdd/?FunctionUnitType=" + FunctionUnitType + "&FunctionId=" + FunctionId + "&FunctionUnitId=" + FunctionUnitId + "&rod=" + Math.floor(Math.random() * 1000),//动态加载表单
+            success: function (data) {
+                var obj = $.string.toObject(data);
+               
+                if (obj.result == "True") {
+                    $.messager.alert("操作成功", "设置功能单元（" + FunctionUnitType + "）成功！", "warning");
+                    $("#" + GridName).datagrid('reload');
+                    
+                    //$("#" + GridName).datagrid('getPager').pagination({
+                    //    beforePageText: '',//页数文本框前显示的汉字
+                    //    afterPageText: '',
+                    //    displayMsg: FunctionUnitType + '数量：' + $("#" + GridName).datagrid('getData').total
+                    //});
+                }
+                else
+                    $.messager.alert("操作提醒", "很抱歉，设置功能单元（" + FunctionUnitType + "）失败！", "warning");
+                $.easyui.loaded();//关闭加载等待
+            },
+            error: function (ex) {
+                $.messager.alert("操作提醒", "操作失败，请联系管理员！", "warning");
+                $.easyui.loaded();//关闭加载等待
+            }
+        });
+
+    }
+
+    //删除功能
+    function DeleteFunction(id) {
+       // debugger;
+        var GridId = "FunctionTree";
+        //获取记录编号       
+        if (id=="") {
+            $.messager.alert("操作提醒", "请先选择一个功能，再进行删除！", "warning");
+            return false;
+        }    
+        $.messager.confirm("操作提醒", "您确定要删除此功能？",
+            function (c) {
+                if (c) {
+                    $.easyui.loading({ msg: "正在删除，请稍等..." });
+                    $.ajax({
+                        type: "POST",
+                        url: "/Main/DelteData/?Id='" + id + "'&TableName=SysFunction&anticache=" + Math.floor(Math.random() * 1000),//动态加载表单
+                        // data: d.form("getData"),
+                        success: function (data) {
+                            var obj = eval("(" + data + ")");
+                            debugger;
+                            if (obj.result = true) {
+                                $.easyui.loaded();
+                                $.messager.alert(obj.msg, function () {
+                                    $("#" + GridId).tree('reload');
+                                });
+
+                            }
+                            else {
+                                $.messager.alert("操作提醒", obj.msg, "warning", function () { $.messager.progress('close'); });
+                                return false;
+                            }
+                        }
+                    });
+
+                }
+            });
+    }
+</script>
+
+}
+<div id="FirstPanel" class="easyui-panel" style="padding: 5px; background: #fafafa; " data-options="border:false,fit:true">
+
+    <div id=" paneltab" class="easyui-layout" style="padding:3px;background:#fafafa;" data-options="border:false,iconCls:'icon-save',closable:true,collapsible:true,minimizable:true,maximizable:true,fit:true">
+
+        <div data-options="region: 'west', split: true, title: '功能列表',width:234" style="width: 234px;">
+
+            <div id="paneltabLeft" class="easyui-layout" style="padding:0px;background:#fafafa;" data-options="border:false,iconCls:'icon-save',split:false,closable:false,collapsible:false,minimizable:false,maximizable:false,fit:true">
+
+                <div data-options="region: 'north', split: false, title: ''" style="height: 37px; border: 0px; padding: 0px;">
+                    <span class="easyui-toolbar">
+                        <a id="AddFunctions" class="easyui-linkbutton" data-options="plain: true, iconCls: 'icon-munich-plus',onClick:function(){ShowFormAdd('添加新功能', 'icon-standard-server-connect', 'SysForm00000043', '850', '342', '{id:1}');}">添加</a>
+                        <span>-</span>
+                        <a class="easyui-linkbutton" data-options="plain: true, iconCls: 'icon-munich-pen',onClick:function(){ShowFormEdit('功能修改', 'icon-standard-server-connect','SysFunction', 'SysForm00000043',$('#FunctionTree').tree('getSelected').id, '850', '342', '{id:1}');}">修改</a>
+                        <span>-</span>
+                        <a class="easyui-linkbutton" data-options="plain: true, iconCls: 'icon-munich-bank',onClick:function(){DeleteFunction($('#FunctionTree').tree('getSelected').id)}">删除</a>
+                    </span>
+                </div>
+
+                <div id="FunctionTreePanel" data-options="region: 'center', split: false, title: '',fit:true" style="border: 0px; padding:5px;">
+
+                    <ul id="FunctionTree" class="easyui-tree" data-options="lines:true,selectOnContextMenu:true,dataPlain:true,toggleOnClick: false,checkbox: false,enableContextMenu: false"></ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="FunctionSetDiv" data-options="region: 'center', split: true, doSize:true,title: '功能设置',onResize:function(width, height){SetPanelWidth(width,height);}" style=" padding: 5px; overflow-y: scroll;">
+
+            <div id="FunctionNav" class="easyui-panel" data-options="title: ''" style="padding: 5px; height:30px; background-color: #BBDCF7; ">
+                请在左边功能树中选择功能节点！
+            </div>
+
+            <div style="height:5px"></div>
+            <div id="FunctionMenu" class="easyui-panel easyui-droppable" data-options="title: ''" style=" padding:0px;height:150px">
+                @Html.Raw(ViewData["Grid1"])
+            </div>
+
+            <div style="height:5px"></div>
+            <div id="FunctionSearch" class="easyui-panel easyui-droppable" data-options="title: '',width:'auto'" style=" padding:0px;height:200px">
+                @Html.Raw(ViewData["Grid2"])
+            </div>
+            <div style="height:5px"></div>
+            <div id="FunctionForm" class="easyui-panel easyui-droppable" data-options="title: ''" style=" padding:0px;height:200px">
+                @Html.Raw(ViewData["Grid3"])
+            </div>
+            <div style="height:5px"></div>
+            <div id="FunctionKey" class="easyui-panel easyui-droppable" data-options="title: ''" style=" padding:0px;height:400px">
+                @Html.Raw(ViewData["Grid4"])
+            </div>
+            <div style="height:5px"></div>
+            <div id="FunctionOther" class="easyui-panel easyui-droppable" data-options="title: ''" style=" padding:0px;height:150px">
+                @Html.Raw(ViewData["Grid5"])
+            </div>
+        </div>
+
+
+        <!--功能元素定义-->
+        <div id="FunctionUnitPanel" data-options="region: 'east', split: true, title: '功能元素',width:340" style="width:440px">
+                       
+                    <ul id="FunctionTreeMenu" class="easyui-tree" ></ul>
+               
+        </div>
+
+    </div>
+
+</div>

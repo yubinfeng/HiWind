@@ -1,0 +1,213 @@
+﻿/*滚动条样式
+Date:2014/5/9
+Author:ybf
+*/
+body
+{
+    font-size: 14px;
+    font-family: "宋体";
+    margin: 0;
+    padding: 0;
+    color: #696969;
+    SCROLLBAR-FACE-COLOR: #ccd8f4;
+	SCROLLBAR-TRACK-COLOR: #FFFFFF;
+	SCROLLBAR-BASE-COLOR: #FFFFFF;
+	SCROLLBAR-SHADOW-COLOR: #FFFFFF;
+	SCROLLBAR-DARKSHADOW-COLOR: #FFFFFF;
+	SCROLLBAR-ARROW-COLOR:#4868B5;
+}
+/*首页样式
+Date:2016/3/8
+Author:ybf*/
+/*右上用户信息及快捷按钮样子*/
+.MenuTopRightAndUserInfo {
+    color: #092e60;
+    text-shadow: 0 0 6px #fff; 
+    font-size: 15px;
+    font-family: 黑体;  
+}
+    .UserInfo {
+    color: #ffffff;
+    text-shadow: 0 0 6px #000; 
+    font-size: 15px;
+    font-family: 黑体;  
+}
+/*用户表单通用样式
+Date:2014/5/9
+Author:ybf*/
+.fieldsetAdd{
+	border:1px solid #CCCCCC;
+	font-family: "宋体";
+	font-size: 14px;
+	font-weight: bold;
+	color: #ffffff;
+	margin:10px 10px 10px 10px;
+	background-color: #ffffff;
+}
+/*用户表单通用样式-表样
+Date:2014/5/9
+Author:ybf*/
+.tableAdd{
+	padding: 00px;
+	border: 0px solid #DBDBDB;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 25px;
+	color: #444444;
+}
+legend{
+	font-family: "宋体";
+	font-size: 14px;
+	line-height: 25px;
+	color: #666666;
+	font-weight: bold;
+}
+
+
+	/* 查询条件字体样式
+	Date:2014/5/9
+	Author:ybf*/
+	
+	.SearchStyle {
+	font-family: "宋体";
+	font-size: 14px;
+	color: #666666;
+	}
+	
+	
+	/*以下是表单验证样式
+	Date:2014/5/9
+	Author:ybf*/
+ .validatebox-text {
+	height: 19px;
+	line-height: 17px;
+	padding-top: 0px;
+	padding-left: 0px;
+	padding-bottom: 2px;
+	padding-right: 0px;
+	background-attachment: scroll;
+	background-size: auto;
+	background-origin: padding-box;
+	background-clip: border-box;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+    font-size: 14px;
+}
+
+.validatebox-invalid {
+	background-repeat: repeat-x;
+	background-position: center bottom;
+	background-color: White;
+	background-image: url("/UserStyle/Images/invalid_line.gif");
+	border-bottom-color: #8ABCE6;
+	border-top-color: #8ABCE6;
+	border-right-color: #8ABCE6;
+	border-left-color: #8ABCE6;
+    font-size: 14px;
+}
+
+	/*INput样式
+	Date:2014/5/9
+	Author:ybf*/
+input{
+	border: 1px solid #95b8e7;font-size: 14px;
+}
+	/*CodeMirror样式
+	Date:2014/5/12
+	Author:ybf*/
+.CodeMirror {          
+            height: auto;
+            border: 1px solid #95b8e7;
+        }
+ .CodeMirror pre {
+           line-height:20px;
+ }
+
+textarea{
+border: 1px solid #95b8e7;
+font-size: 14px;
+}
+
+.formTable {
+	font-family: "宋体";
+	font-size: 14px;
+	background-color: #FFFFFF;
+	font-weight: normal;
+	color: #333333;
+	height: 30px;
+	valign:middle;
+	text-align: left;
+	background-position: center;
+	border: 1px solid #CCCCCC;
+}
+.formTitleTop {
+	font-family: "宋体";
+	font-size: 14px;
+	font-weight: bold;
+	color: #666666;
+	height: 30px;
+	valign:middle;
+	text-align: left;
+	background-position: center;
+}
+.formTitle {
+	font-family: "宋体";
+	font-size: 14px;
+	font-weight: bold;
+	color: #666666;
+	height: 30px;
+	valign:middle;
+	text-align: left;
+	padding: 0px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: dashed;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	border-top-color: #CCCCCC;
+	border-right-color: #CCCCCC;
+	border-bottom-color: #CCCCCC;
+	border-left-color: #CCCCCC;
+}
+
+/*
+顶部下拉菜单样式
+Date:2014/12/01
+Athor:Ybf
+*/
+
+.TopMenuFont{
+    width:150px;font-size:17px;
+     /*font-weight: bold;*/
+     font-family: "黑体";
+     color: #000000;
+}
+.TopMenuFontChild{
+    margin-left:2px;font-size:15px;
+    color: #000000;
+}
+
+/*
+GRID行高
+ Date:2015/11/24
+Athor:Ybf
+*/
+.datagrid-row {
+        height: 32px;
+    }
+/*
+    查询 条件栏样式
+    Date:2016/3/25
+*/
+.SearchForm{
+    height: 30px; background-color: #CCCCCC; border-top: 1px dashed #95b8e7; border-bottom: 1px dashed #95b8e7;
+}

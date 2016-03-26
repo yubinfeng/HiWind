@@ -1,0 +1,647 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="03475ee8-c419-49c5-a93a-47dd35edfc1a" ChangeDateTime="03/06/2016 13:43:21">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[CompanyChangeFist]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompanyChangeSecond" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="072790bb-9603-4ef9-8f54-b344db8fc870" ChangeDateTime="03/06/2016 13:45:44">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[CompanyChangeFist]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompanyChangeFirst" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b6e8f03d-b691-4ae5-a97b-32e2e3018df5" ChangeDateTime="03/06/2016 13:47:02">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[CarNumber]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LicensePlate " />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="377e3dad-3b19-4909-a28b-59d51883f313" ChangeDateTime="03/06/2016 13:47:06">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[CarNumberChangeFirst]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LicensePlate ChangeFirst" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b72fb1b2-ff64-4bdc-a77a-c71c5f931a9a" ChangeDateTime="03/06/2016 13:47:08">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[CarNumberChangeSecond]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LicensePlate ChangeSecond" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="97f24a5b-085e-4523-8eca-89adb0fd6676" ChangeDateTime="03/06/2016 13:47:11">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[LicensePlate ChangeSecond]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LicensePlateChangeSecond" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6e99b6b6-b07c-4b8d-a6d3-d5f1e7482bd7" ChangeDateTime="03/06/2016 13:47:15">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[CarNumberChangeThird]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LicensePlate ChangeThird" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8622e0b7-a733-4ca4-b843-8fbcc316881a" ChangeDateTime="03/06/2016 13:47:17">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[LicensePlate ChangeThird]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LicensePlateChangeThird" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="80b0a016-49a6-44c0-b557-f8af3d7ce29c" ChangeDateTime="03/06/2016 13:51:20">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[MeterNmber]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="MeterNumber" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2e309d53-5e47-4702-a14c-f07bf0a83d8b" ChangeDateTime="03/06/2016 13:57:16">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[ChangeData]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ChangeDataFirst" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="19499719-d522-4f3f-96d9-bc1924a529f0" ChangeDateTime="03/06/2016 13:58:00">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[ChangeDataFirst]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompanyChangeDataFirst" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="af7f4d59-0974-4415-8f9e-3024ad6979a8" ChangeDateTime="03/06/2016 13:58:02">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[ChangeDataSecond]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompanyChangeDataSecond" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="26d37536-010d-4b08-b791-e51214aaa165" ChangeDateTime="03/06/2016 13:58:04">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[ChangeDataThird]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompanyChangeDataThird" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ba23a59d-f63f-413d-8253-6d0faf0e70e4" ChangeDateTime="03/06/2016 13:58:40">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[LicensePlate ChangeFirst]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LicensePlateChangeFirst" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2c756988-087f-4796-84e7-215b4d0dee34" ChangeDateTime="03/06/2016 13:59:03">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[CompanyChangeDataThird]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LicensePlateChangeDataFirst" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c5a22d4f-1e50-428f-891a-b2e264789eb2" ChangeDateTime="03/06/2016 13:59:13">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[LicensePlateChangeDataFirst]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LicensePlateChangeDataSecond" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3d446561-f3d0-4f5a-9c52-d023beb9a7e1" ChangeDateTime="03/06/2016 14:00:30">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[LicensePlateChangeDataThird]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LicensePlateChangeDateThird" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="00222bb8-88a9-4a05-b3af-e2a52e29fbf5" ChangeDateTime="03/06/2016 14:00:32">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[LicensePlateChangeDataSecond]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LicensePlateChangeDateSecond" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="94f93de2-c067-4012-b6c5-e115a56af36e" ChangeDateTime="03/06/2016 14:00:36">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[CompanyChangeDataFirst]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompanyChangeDateFirst" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0f4492b4-5152-47c3-a1a5-43cfe15194e8" ChangeDateTime="03/06/2016 14:00:39">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[CompanyChangeDataSecond]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompanyChangeDateSecond" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="19bc1c13-412a-42dc-a227-83e4108dcb66" ChangeDateTime="03/06/2016 14:00:42">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[CompanyChangeDataThird]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompanyChangeDateThird" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="47807a0e-f964-456c-a5ec-55d933543617" ChangeDateTime="03/06/2016 14:00:44">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[registrationDate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RegistrationDate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="74e3ca36-5a91-47cc-b58a-9b9f3762c494" ChangeDateTime="03/06/2016 14:04:27">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[NumberChangeThird]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="NumberChangeDateFirst" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="54bbd7cb-bb42-495b-a985-40513b734d2c" ChangeDateTime="03/06/2016 15:33:13">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[LicensePlate ]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LicensePlate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2cf6dd65-7e18-4b0e-93a7-592f73b8125e" ChangeDateTime="03/06/2016 15:33:21">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[LicensePlateCorler]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LicensePlateColer" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a8429fc0-bba1-4783-b598-efd5da98dd90" ChangeDateTime="03/06/2016 15:33:32">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[VehicleSource ]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VehicleSource" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="75673696-2b3f-4911-8dce-572d57f447ab" ChangeDateTime="03/06/2016 17:46:50">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[CreateUser]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CreateId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0151aa41-cc73-4ec7-9c74-db51a39efdbb" ChangeDateTime="03/06/2016 17:46:54">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[UpdateUser]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UpdateId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="79651b42-cd6f-4bf2-8ca4-1c3c2902aaaf" ChangeDateTime="03/07/2016 01:08:11">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[LicensePlateChangeDataFirst]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LicensePlateChangeDateFirst" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="1572e847-4f85-4345-a29c-3934a1b7b8f7" ChangeDateTime="03/07/2016 07:17:00">
+    <Property Name="ElementName" Value="[dbo].[VehicleInfo].[Organization]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OrgId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="05a6dad4-1e2a-4f14-a6ba-f1459e660554" ChangeDateTime="03/07/2016 07:47:21">
+    <Property Name="ElementName" Value="[dbo].[CVehicleParameters].[producingArea]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CVehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ProducingArea" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b36fc498-feb6-4bb9-862c-6a85f6f12009" ChangeDateTime="03/07/2016 07:53:23">
+    <Property Name="ElementName" Value="[dbo].[CVehicleParameters].[Length]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CVehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VehicleLength" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8764e2a3-6182-4c18-932d-5d4164589cf4" ChangeDateTime="03/07/2016 08:14:19">
+    <Property Name="ElementName" Value="[dbo].[CVehicleParameters].[enginePower]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CVehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EnginePower" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="daf60946-0a8c-46da-abda-29a1f9ea54a5" ChangeDateTime="03/07/2016 08:18:29">
+    <Property Name="ElementName" Value="[dbo].[CVehicleParameters].[DischargeStandard ]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CVehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EffluentStandard" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="13afd6bc-85c1-45ad-81ab-612e90462e21" ChangeDateTime="03/07/2016 08:29:58">
+    <Property Name="ElementName" Value="[dbo].[CVehicleParameters].[EngineType ]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CVehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EngineType" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="761aad7b-17c0-4730-9c7b-60e2d1127f97" ChangeDateTime="03/07/2016 08:30:02">
+    <Property Name="ElementName" Value="[dbo].[CVehicleParameters].[ApprovedCrew ]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CVehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ApprovedCrew" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b105906f-fcab-4a8e-9a73-9797e18c4ff9" ChangeDateTime="03/07/2016 08:30:11">
+    <Property Name="ElementName" Value="[dbo].[CVehicleParameters].[FuelType ]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CVehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FuelType" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3e357b8f-ce78-41b9-9062-cd4f6cf6f30e" ChangeDateTime="03/07/2016 08:30:13">
+    <Property Name="ElementName" Value="[dbo].[CVehicleParameters].[EngineDisplacement ]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CVehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EngineDisplacement" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d8425502-fdac-4fa4-a603-f383ccb9dfdd" ChangeDateTime="03/07/2016 08:30:16">
+    <Property Name="ElementName" Value="[dbo].[CVehicleParameters].[TyreType ]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CVehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TyreType" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fda49131-370e-48ee-b7fb-9a4bb3ca0ee1" ChangeDateTime="03/07/2016 08:30:18">
+    <Property Name="ElementName" Value="[dbo].[CVehicleParameters].[LightSystem ]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CVehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LightSystem" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="827dd7b8-9375-4176-b83c-3e5224b1c222" ChangeDateTime="03/07/2016 08:34:43">
+    <Property Name="ElementName" Value="[dbo].[CVehicleParameters].[v]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CVehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OrgId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7b593402-a08f-416f-a339-c18169fb71cc" ChangeDateTime="03/07/2016 08:37:01">
+    <Property Name="ElementName" Value="[dbo].[CVehicleParameters]" />
+    <Property Name="ElementType" Value="SqlTable" />
+    <Property Name="ParentElementName" Value="[dbo]" />
+    <Property Name="ParentElementType" Value="SqlSchema" />
+    <Property Name="NewName" Value="[VehicleParameters]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="26793e11-2319-44dd-ba7f-048c75df5a5b" ChangeDateTime="03/07/2016 17:00:20">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[RearOverhang]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RearOverhangFront" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c627b2ad-b925-47ed-a0ef-6cbf9c80d4ba" ChangeDateTime="03/07/2016 17:01:19">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[RearOverhangFront]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RearOverhangBack" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="da680e7a-a18c-458d-89e0-0ad52287d371" ChangeDateTime="03/07/2016 17:03:05">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[Airbags]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RearOverhangAirbags" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6ab88fd9-bbdc-4fb6-ac9a-a3f8e1c0bdc6" ChangeDateTime="03/07/2016 17:03:19">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[RearOverhangAirbags]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AirbagsFront" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3d3819fb-f3ef-43a6-b956-2b4ff8fa0693" ChangeDateTime="03/07/2016 17:05:31">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[LeafSpringNmber]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LeafSpringNmberFront" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="04ee5204-7b3a-403f-8b90-6c7a593fa061" ChangeDateTime="03/07/2016 17:39:50">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[OtherConfigurations]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OtherConfigLubrication" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="12779923-5ad7-4acf-b087-a32727d6b8c2" ChangeDateTime="03/07/2016 17:41:14">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[OtherConfigLubrication]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OtherConfigGps" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="90c6b469-1713-47de-a3d8-309c412ca7f1" ChangeDateTime="03/07/2016 17:41:48">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[OtherConfigGps]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OtherConfigGrapher" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fa3acb31-7bb3-4e3a-a387-3fc13732229b" ChangeDateTime="03/07/2016 17:42:21">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[OtherConfigGrapher]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OtherConfigRetarder" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6c5c2146-673b-485d-b09d-d6c638f8adab" ChangeDateTime="03/07/2016 17:43:32">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[OtherConfigRetarder]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OtherConfigCan" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="17b63073-21fa-4cca-a825-0b0b27ac7ff7" ChangeDateTime="03/07/2016 17:44:36">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[OtherConfigCan]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OtherConfigDiversionDevice" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bcc0d619-f392-4b3a-be36-8005a40cfcb8" ChangeDateTime="03/07/2016 17:45:31">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[fire unit]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OtherConfigFireUnit" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2c9e6298-9dbb-49a3-8a45-0ecbb15c9da3" ChangeDateTime="03/07/2016 17:47:07">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[Safeguard]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SpecialVehicleSafeguard" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e217a1c6-00fb-4a5c-849a-e863619ae706" ChangeDateTime="03/07/2016 17:48:20">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[SpecialVehicleSafeguard]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SpecialVehicleEnvironmental" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0d11909e-fb0b-4483-9918-e7b070b9ce20" ChangeDateTime="03/07/2016 17:49:14">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[SpecialVehicleEnvironmental]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SpecialVehicleFre-fighting" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d8dcb5a7-1533-4d1c-a5e1-020a09295d1a" ChangeDateTime="03/07/2016 17:49:24">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[SpecialVehicleFre-fighting]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SpecialVehicleFire" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b5521c66-9863-4c41-9582-ea693bd27aff" ChangeDateTime="03/07/2016 17:49:59">
+    <Property Name="ElementName" Value="[dbo].[VehicleParameters].[SpecialVehicleFire]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleParameters]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SpecialVehicleCertificate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="acfb0908-74bf-493b-8681-996d532a45ea" ChangeDateTime="03/12/2016 07:22:47">
+    <Property Name="ElementName" Value="[dbo].[VehicleChange].[DeleteTag]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleChange]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OrgId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6b14d61c-284b-4d00-982a-ec5838a0a991" ChangeDateTime="03/12/2016 08:32:49">
+    <Property Name="ElementName" Value="[dbo].[VehicleChange].[ChageDate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleChange]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ChangeDate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="22cde652-cd56-4319-8284-6263ab7ba22e" ChangeDateTime="03/12/2016 10:42:15">
+    <Property Name="ElementName" Value="[dbo].[VehicleRepair].[varchar(50)]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleRepair]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RepairContent" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4a572f41-5582-42d2-8743-eb8576a8b49d" ChangeDateTime="03/12/2016 10:42:23">
+    <Property Name="ElementName" Value="[dbo].[VehicleRepair].[RepairContent]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleRepair]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RepairCompany" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fc5d433a-a005-4b9e-b73e-30698b9bbddb" ChangeDateTime="03/12/2016 15:34:43">
+    <Property Name="ElementName" Value="[dbo].[VehicleAssembly].[Company]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleAssembly]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ChanageCompany" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7986dc03-6f41-4a7f-bb27-263b513e36d4" ChangeDateTime="03/12/2016 17:07:51">
+    <Property Name="ElementName" Value="[dbo].[VehicleDetection].[TtechnicalLevel ]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleDetection]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TechnicalLevel " />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8df0b786-348b-4e86-940c-de949e2e8b7b" ChangeDateTime="03/12/2016 17:09:00">
+    <Property Name="ElementName" Value="[dbo].[VehicleDetection].[Detection]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleDetection]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DetectionCompany" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5e280200-7d15-4825-ad28-58f192deba8f" ChangeDateTime="03/12/2016 17:33:52">
+    <Property Name="ElementName" Value="[dbo].[VehicleFuelConsumption].[FuelConsumption]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleFuelConsumption]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FuelConsumptionDate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f68900a5-f6c2-4f46-bfcf-75863e3dda97" ChangeDateTime="03/12/2016 17:35:45">
+    <Property Name="ElementName" Value="[dbo].[VehicleFuelConsumption].[MileageMonth]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleFuelConsumption]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FuelConsumptionMonth" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8d2f5280-d74f-4886-8d9c-409c16b59fd7" ChangeDateTime="03/12/2016 17:36:21">
+    <Property Name="ElementName" Value="[dbo].[VehicleFuelConsumption].[FuelConsumption]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleFuelConsumption]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FuelConsumptionHundred" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6c9047e3-f159-43b7-8b01-7bf56f531a5b" ChangeDateTime="03/12/2016 18:20:33">
+    <Property Name="ElementName" Value="[dbo].[VehicleAccident].[AccidentPlace]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleAccident]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AccidentProperty" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="25f8afc1-e7dc-450b-875f-6196cf449f09" ChangeDateTime="03/12/2016 18:22:04">
+    <Property Name="ElementName" Value="[dbo].[VehicleAccident].[234]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleAccident]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AccidentType" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="62fd7a84-895f-4d2e-b957-bad9b1f88e72" ChangeDateTime="03/12/2016 18:22:24">
+    <Property Name="ElementName" Value="[dbo].[VehicleAccident].[AccidentType]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleAccident]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AccidentLose" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0d2833ee-0597-4f63-bf11-3d2d878c2492" ChangeDateTime="03/12/2016 18:37:53">
+    <Property Name="ElementName" Value="[dbo].[VehicleExamined].[2]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleExamined]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Accident" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="76a24f2b-3c14-4575-a6bc-72649032aba2" ChangeDateTime="03/13/2016 15:56:06">
+    <Property Name="ElementName" Value="[dbo].[VehicleQualification].[RepairUnits ]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleQualification]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RepairCompany" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="183fefa5-94e3-4b64-ae3d-679bdbabd318" ChangeDateTime="03/13/2016 15:57:07">
+    <Property Name="ElementName" Value="[dbo].[VehicleQualification].[RepairDate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleQualification]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RepairStartDate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d8b91d63-d314-4fe3-b507-d75e79d58072" ChangeDateTime="03/13/2016 15:57:15">
+    <Property Name="ElementName" Value="[dbo].[VehicleQualification].[RepairStartDate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleQualification]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RepairFinishDate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ba5e0bdb-ce19-45e1-9ce5-425b00144e57" ChangeDateTime="03/13/2016 15:58:17">
+    <Property Name="ElementName" Value="[dbo].[VehicleQualification].[PickUp]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleQualification]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PickUpPepole" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c8d342e3-7a36-4258-8ff3-fd469d23a2e7" ChangeDateTime="03/13/2016 15:58:25">
+    <Property Name="ElementName" Value="[dbo].[VehicleQualification].[PickUpPepole]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleQualification]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PickUpPerson" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6e391e29-4100-442c-87b9-45c545c93682" ChangeDateTime="03/13/2016 16:02:12">
+    <Property Name="ElementName" Value="[dbo].[VehicleQualification].[RepairCount]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleQualification]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReRepairCount" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ee504635-baa6-48cd-acf1-9701cd23d92f" ChangeDateTime="03/13/2016 16:02:14">
+    <Property Name="ElementName" Value="[dbo].[VehicleQualification].[RepairObject]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleQualification]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReRepairObject" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5b60f4e1-edb6-4daf-9249-a0675831a447" ChangeDateTime="03/13/2016 16:02:16">
+    <Property Name="ElementName" Value="[dbo].[VehicleQualification].[RepairDate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleQualification]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReRepairDate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="96f270f2-3987-4c4e-86fc-a8154004f40b" ChangeDateTime="03/13/2016 16:02:24">
+    <Property Name="ElementName" Value="[dbo].[VehicleQualification].[RepairDate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleQualification]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReRepairFinishDate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="40949dc2-eb44-41aa-ad3e-ab4cab8ade28" ChangeDateTime="03/13/2016 16:03:52">
+    <Property Name="ElementName" Value="[dbo].[VehicleQualification].[ReRepairPerson]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleQualification]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReRepairInspector" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b3764299-1fd8-4b92-a28e-672081592b90" ChangeDateTime="03/13/2016 16:28:31">
+    <Property Name="ElementName" Value="[dbo].[VehicleQualification].[InvoiceNo]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VehicleQualification]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RepairInvoiceNo" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="eed655c9-bcc0-47f7-8e47-bd02148593de" ChangeDateTime="03/14/2016 09:40:36">
+    <Property Name="ElementName" Value="[dbo].[SysPrintTemplate].[ReTmpName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SysPrintTemplate]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Name" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e4352ec6-b0c2-4b34-9f62-2d3f7450156b" ChangeDateTime="03/14/2016 09:40:39">
+    <Property Name="ElementName" Value="[dbo].[SysPrintTemplate].[ReTmpType]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SysPrintTemplate]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="pType" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d90f4c4a-f5d5-4ddb-95b6-f82c7fd1b54e" ChangeDateTime="03/14/2016 09:40:41">
+    <Property Name="ElementName" Value="[dbo].[SysPrintTemplate].[pType]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SysPrintTemplate]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Type" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a151ccde-1e3a-4323-b2eb-9cc7bb1c9a61" ChangeDateTime="03/14/2016 09:40:44">
+    <Property Name="ElementName" Value="[dbo].[SysPrintTemplate].[ReTmpModel]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SysPrintTemplate]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Model" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="676ea91d-77ae-419f-a920-27849ead70eb" ChangeDateTime="03/14/2016 09:43:52">
+    <Property Name="ElementName" Value="[dbo].[SysPrintTemplate].[PrintDirection]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SysPrintTemplate]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Direction" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bebc0756-a153-4e99-8dfc-3ff511252f2c" ChangeDateTime="03/14/2016 09:45:34">
+    <Property Name="ElementName" Value="[dbo].[SysPrintTemplate].[ReceiptKeyValue]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SysPrintTemplate]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="KeyValue" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c5cd5cd6-cd2d-457f-982e-27a5eb8650b6" ChangeDateTime="03/23/2016 15:33:09">
+    <Property Name="ElementName" Value="[dbo].[SysError].[Type]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SysError]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ErrorType" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0ed6bf75-86d2-4f7d-8b9e-7826e8a80c4b" ChangeDateTime="03/23/2016 15:33:36">
+    <Property Name="ElementName" Value="[dbo].[SysError].[Log]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SysError]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ErrorLog" />
+  </Operation>
+</Operations>

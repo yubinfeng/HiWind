@@ -1,0 +1,11 @@
+[
+  {
+    "outputFileName": "UserScript/bundle.js",
+    "inputFiles": [
+      "UserScript/CommonJs.js",
+      "UserScript/Main.js",
+      "UserScript/Search.js",
+      "UserScript/Users.js"
+    ]
+  }
+]

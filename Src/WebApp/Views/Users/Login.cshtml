@@ -1,0 +1,162 @@
+﻿@{
+    string SystemName = "数据库连接失败，请联系管理员！";
+    string LoginImg = "/Images/Logo/Login.jpg";
+    try {
+        SystemName = new HiWind.EasyUI.Config().GetConfigModel().SystemName;
+        LoginImg =  new HiWind.EasyUI.Config().GetConfigModel().LoginImg;
+    }
+    catch(Exception ex){}
+    ViewBag.Title = SystemName;
+}
+@section Head{
+    <style type="text/css">    body {background-color: #3e3e3e;}    </style>
+    <script type="text/javascript">
+        $(function () {
+            try {
+                document.onkeydown = keyDown;
+                //BrowserScreenSetCss();
+                WindowMax();
+                //CodeImgSrc();
+                //document.onkeypress = EscClose;
+                //browserCheck();
+                SetLoginCenter();
+                window.onresize = function () {
+                    SetLoginCenter();
+                }
+
+                //DownLoad
+                 $("#btnActive").linkbutton({plain: false, iconCls: 'icon-standard-cog',onClick: function () {window.location.href='/DownLoad/install_lodop32.exe';$("#Pass").validatebox('setValue', "");}});
+                //Clear
+                 $("#btnClear").linkbutton({iconCls: 'icon-standard-delete',onClick: function () {$("#User").validatebox('setValue', "");$("#Pass").validatebox('setValue', "");}});
+                 //Login on
+                 $("#btnLogin").linkbutton({plain: false, iconCls: 'icon-standard-key',onClick: function () {LoginOn();}});
+                 //Load user info
+                  LoadGet();
+            }
+            catch (ex) {
+               // alert(ex);
+            }
+        });
+
+        function SetLoginCenter() {
+            var lefter = parseInt((document.documentElement.clientWidth / 2) - (parseInt($("#LoginMain").css("width")) / 2));//屏幕居中
+            var toper = parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#LoginMain").css("height")) / 2));
+            $("#LoginMain").css({ "left": lefter + "px" });
+            $("#MaxPanel").css({ "width": document.documentElement.clientWidth + "px", "height": "736px" });
+            $("#MaxPanel").css({ "top": toper + "px" });
+        }
+
+        //Enter into
+        function keyDown() {
+            var keycode = event.keyCode;
+            var keyChar = String.fromCharCode(keycode);
+            if (keycode == 13)
+                //event.keyCode=9
+                LoginOn();
+        }
+
+        //Set Window
+        function WindowSet() {
+            var thiswindowwidth = 1229;
+            var thiswindowheight = 736;
+            window.resizeTo(thiswindowwidth, thiswindowheight);
+            var left = parseInt((screen.availWidth / 2) - (thiswindowwidth / 2));//屏幕居中
+            var top = parseInt((screen.availHeight / 2) - (thiswindowheight / 2));
+            window.moveTo(left, top);
+            var IsOpenWin = OpenWindow2(520, 400, '/users/login');
+            if (IsOpenWin == null) {
+                alert("您的浏览器禁用了弹出窗口，请打开后再访问本系统！");
+            }
+            else {
+                closeWindow();
+            }
+        }
+        
+        //User login
+        function LoginOn() {
+            var ErrStr = "";
+            var ErrCodeStr = "";
+            if ($("#User").val() == "")
+            { ErrStr += "　用户名"; }
+            if ($("#Pass").val() == "")
+            { ErrStr += "　密码"; }
+            if (ErrStr != "" || ErrCodeStr != "") {
+                if (ErrStr != "") {
+                    ErrStr = ErrStr + "不能为空！";
+                }
+                $.messager.alert('提示', ErrStr + ErrCodeStr);
+                return false;
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/Users/UserLogin",
+                    data: "username=" + $("#User").val() + "&PassWord=" + $("#Pass").val() + "&CheckCode=" + $("#Code").val() + "&anticache=" + Math.floor(Math.random() * 1000),
+                    beforeSend: function (XMLHttpRequest) { $.messager.progress({ text: '正在登录中，请稍等……' }); },
+                    success: function (datas) {
+                        var obj = eval('(' + datas + ')');
+                        if (obj.msg != "登录成功！") {
+                            $.messager.progress('close');
+                            $.messager.alert('提示', obj.msg);
+                            return false;
+                        }
+                        else {
+                            window.location.href = '/main/Index';
+                        }
+                    },
+                    error: function (datas) {
+                        str = '发生异常，请联系管理员！';//result.responseText;
+                        $.messager.alert('提示', str);
+                    }
+                });
+            }
+        }
+
+    </script>
+}
+<div id="MaxPanel" style="position: absolute; text-align: center; ">
+    <div id="LoginMain" style="width: 1229px; height: 736px;  position: absolute;">
+        <div id="LoginMain" style="width: 1229px; height: 736px;  position: absolute;">
+            <table border="0" cellpadding="0" cellspacing="0" background="/Images/Logo/Login.jpg" style="width:1229px;height:736px;">
+                <tr>
+                    <td width="566" align="right"></td>
+                    <td width="542" height="400" valign="top">
+                        <table width="437" border="0" cellpadding="2" cellspacing="2">
+                            <tr>
+                                <td width="151" rowspan="6">&nbsp; </td>
+                                <td width="86" height="385">&nbsp;</td>
+                                <td width="180"></td>
+                            </tr>
+                            <tr>
+                                <td height="50">&nbsp;</td>
+                                <td align="left"><input class="easyui-validatebox"  style="font-weight: bolder; width: 155px;height:30px;font-size:18px;padding-left:5px" type="text"  id="User" data-options="required:true,iconCls:'icon-man'"  value="" /></td>
+                            </tr>
+                            <tr style="height:65px">
+                                <td height="43">&nbsp;</td>
+                                <td align="left"><input class="easyui-validatebox" style="font-weight: bolder; width: 155px;height:30px;font-size:18px;padding-left:5px" type="password" id="Pass" data-options="required:true,iconCls:'icon-lock'" value="" /></td>
+                            </tr>
+                            <tr style="height:10px">
+                                <td height="40">  </td>
+                                <td style="color:#4c4c4c;font-size:15px;" align="left"><table><tr><td><input name="savedate" id="SaveDate"  style="height:18px;width:18px;" type="checkbox" onclick="LoginSet()" /></td> <td>记住用户和密码</td></tr></table></td>
+                            </tr>
+                            <tr style="height:85px">
+                                <td height="60" colspan="2" valign="top">
+                                    <div >
+                                        <a id="btnActive" class="easyui-linkbutton" style="width: 90px;height:28px;font-size:15px;font-weight:bold;padding-top:5px">文件下载</a>
+                                        <a id="btnClear" class="easyui-linkbutton" style="width: 70px;height:28px;font-size:15px;font-weight:bold;padding-top:5px">清空</a>
+                                        <a id="btnLogin" class="easyui-linkbutton" style="width: 70px;height:28px;font-size:15px;font-weight:bold;padding-top:5px">登录</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="86">&nbsp;</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="121" align="left"></td>
+                </tr>
+            </table>
+      </div>
+   </div>
+</div>
