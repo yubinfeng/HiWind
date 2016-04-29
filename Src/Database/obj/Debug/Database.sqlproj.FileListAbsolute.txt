@@ -1,0 +1,5 @@
+F:\HiWind_Publish\HiWind_V1_1_0429\Src\Database\bin\Debug\Database.dacpac
+F:\HiWind_Publish\HiWind_V1_1_0429\Src\Database\bin\Debug\Database.dll
+F:\HiWind_Publish\HiWind_V1_1_0429\Src\Database\bin\Debug\Database.pdb
+F:\HiWind_Publish\HiWind_V1_1_0429\Src\Database\obj\Debug\Database.dll
+F:\HiWind_Publish\HiWind_V1_1_0429\Src\Database\obj\Debug\Database.pdb
