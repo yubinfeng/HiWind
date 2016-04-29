@@ -109,6 +109,19 @@ namespace WebApp.Controllers
             return View();
         }
 
+        public ActionResult Form()
+        {
+            if (Request.QueryString["Type"] != null)
+            {
+                if (Request.QueryString["Type"].ToString() == "Add")
+                    ViewData["FormContent"] = new HiWind.EasyUI.Form(UserID).AddFormToTab(Request.QueryString["FormId"]);
+                else if (Request.QueryString["Type"].ToString() == "Edit")
+                    ViewData["FormContent"] = new HiWind.EasyUI.Form(UserID).AddFormToTab(Request.QueryString["FormId"]);
+                else if (Request.QueryString["Type"].ToString() == "Show")
+                    ViewData["FormContent"] = new HiWind.EasyUI.Form(UserID).AddFormToTab(Request.QueryString["FormId"]);
+            }
+            return View();
+        }
         public ActionResult Functions()
         {
             var search = new HiWind.EasyUI.Search(UserID);
@@ -1038,26 +1051,9 @@ namespace WebApp.Controllers
 
         public string GetMenusSearch()
         {
-            return new HiWind.EasyUI.Menu(UserID).GetMenusSearch();
-
-        }
-        /// <summary>
-        /// Show top menu 
-        /// </summary>
-        /// <returns></returns>
-        public string GetTopMenuAuthorization()
-        {
-            return new HiWind.EasyUI.Tree(UserID).GetTopMenuAuthorization().ToString();
+            return new HiWind.EasyUI.Menu(UserID).GetMenusList();
         }
 
-        /// <summary>
-        /// show child menu
-        /// </summary>
-        /// <returns></returns>
-        public string GetChildrenMenusAuthorization(string parentId)
-        {
-            return new HiWind.EasyUI.Tree(UserID).GetChildrenMenusAuthorization(parentId).ToString();
-        }
 
         #region Add menu
         /// <summary>
@@ -1111,6 +1107,27 @@ namespace WebApp.Controllers
 
         }
         #endregion
+        #endregion
+
+        #region Tree
+        /// <summary>
+        /// Show top menu 
+        /// </summary>
+        /// <returns></returns>
+        public string GetTopMenuAuthorization()
+        {
+            return new HiWind.EasyUI.Tree(UserID).GetTopMenuAuthorization().ToString();
+        }
+
+        /// <summary>
+        /// show child menu
+        /// </summary>
+        /// <returns></returns>
+        public string GetChildrenMenusAuthorization(string parentId)
+        {
+            return new HiWind.EasyUI.Tree(UserID).GetChildrenMenusAuthorization(parentId).ToString();
+        }
+
 
         #endregion
 

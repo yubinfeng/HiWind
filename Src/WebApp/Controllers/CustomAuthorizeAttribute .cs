@@ -40,7 +40,7 @@ namespace WebApp
             if (IsAuthorityActionOrControler(controllerName, actionName))
                 return;
             base.OnAuthorization(filterContext);
-        }
+        }        
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             //time out

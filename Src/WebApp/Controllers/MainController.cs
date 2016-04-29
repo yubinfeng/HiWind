@@ -24,7 +24,6 @@ namespace WebApp.Controllers
     [CustomAuthorize]
     public class MainController : HiWindController
     {
-
         #region View
         public override ActionResult Index()
         {
@@ -198,6 +197,5 @@ namespace WebApp.Controllers
         }
 
         #endregion
-
     }
 }
