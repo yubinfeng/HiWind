@@ -236,41 +236,6 @@ function doThis(obj)
 	obj.css('top',toper);	   
 }
 
-//show Mask
-function ShowMask()
-{
-	//调整公用对象尺寸
-	var divMask =$("#divMask");	
-	//divMask.focus();
-    FindDimensions();
-  	divMask.show();
-
-}
-
-//hide Mask
-function HideMask()
-{
-	var divMask =$("#divMask");
-	divMask.hide();
-}
-
-//show Wait
-function ShowWait(){
-    var loadingImg="loading.gif";
-    ShowMask();
-	var divWait =$("#divWait");
-    var html='<table   width="80" border="0" cellpadding="5" cellspacing="5" bordercolor="#FFFFFF" bgcolor="#dddddd">  <tr><td height="67" bgcolor="#FFFFFF"><table width="260" height="52" border="0"><tr><td width="48" height="48" align="center"><img src="/Content/icon/'+loadingImg+'" width="32" height="32" /></td><td width="230" class=word>正在加载中，请稍等...<!--br>如长时间没有加载，请按F5手动刷新！--></td>  </tr>    </table></td>  </tr></table>';
-    $("#divWait").html("");
-    $("#divWait").html(html);		
-	divWait.show(); 		    
-	DoCenter(divWait);
-}
-//hide Wait
-function HideWait(){   
-	$("#divWait").hide();
-	$("#divMask").hide();
-}
-
  //get url 
  function QueryString(qs){
     var s = location.href;
@@ -281,23 +246,6 @@ function HideWait(){
             re = s[i].replace(qs+"=","");
     return re;
 }
-
-//get photo
-function GetPhoto(id,cyzgzh){
-     
-      $.ajax({
-       type: "GET",
-        url: "/CongYeRY/GetPhoto/"+id+"-"+cyzgzh+"-"+Math.floor(Math.random()*1000),
-       data: "re="+Math.floor(Math.random()*1000),
-       success: function(msg){
-          if(msg!="0")
-          $("#photo").attr("src","/CongYeRY/GetPhoto/"+id+"-"+cyzgzh+"-"+(Math.floor(Math.random()*1000)));
-          else
-          $("#photo").attr("src","/Content/images/null.gif");
-       }
-      });
-
-  }  
 
 //clear value
 function ClearVal()
@@ -388,7 +336,7 @@ function FormatDate(str){
 
 }
 
-//获取参数
+//Get url params
 function QueryString(qs){
     var s = location.href;
     s = s.replace("?","?&").split("&");
@@ -426,18 +374,18 @@ function OpenwinFull(url) {
 }
 
 function WindowMax() {
-    if (window.screen) {//判断浏览器是否支持window.screen判断浏览器是否支持screen     
-        var myw = screen.availWidth;   //定义一个myw，接受到当前全屏的宽     
-        var myh = screen.availHeight;  //定义一个myw，接受到当前全屏的高     
-        window.moveTo(0, 0);           //把window放在左上脚     
-        window.resizeTo(myw, myh);     //把当前窗体的长宽跳转为myw和myh     
+    if (window.screen) {  
+        var myw = screen.availWidth;  
+        var myh = screen.availHeight;   
+        window.moveTo(0, 0);          
+        window.resizeTo(myw, myh);     
     }
 }
 
 //Maximum window 
 function OpenWindow2(width,height,url)
 { 
-      var left = parseInt((screen.availWidth/2) - (width/2));//屏幕居中   
+      var left = parseInt((screen.availWidth/2) - (width/2));
       var top = parseInt((screen.availHeight/2) - (height/2));   
       return  window.open(url,'','toolbar=0,scrollbars=1,menubar=0,status=0,resizable=0,height='+height+',width='+width+',left=' + left + ',top=' + top+',screenX='+left+',screenY='+top); 
 } 
@@ -446,7 +394,7 @@ function OpenWindow2(width,height,url)
 var newOpen3=null;
 function OpenWindow3(width,height,url,name)
 { 
-      var left = parseInt((screen.availWidth/2) - (width/2));//屏幕居中   
+      var left = parseInt((screen.availWidth/2) - (width/2));
       var top = parseInt((screen.availHeight/2) - (height/2));   
 
       newOpen3 =  window.open(url,name,'toolbar=0,scrollbars=1,menubar=0,status=0,resizable=0,height='+height+',width='+width+',left=' + left + ',top=' + top+',screenX='+left+',screenY='+top); 
@@ -552,116 +500,6 @@ function SetFormVal(datas, formname) {
     }
 
 }
-
-//Fill value
-function SetFormValForObj(datas, object) {
-    for (key in datas[0]) {
-        for (var m = 0; m < object.length; m++) {
-            if (cTrim(object[m].split('=')[0].toLowerCase(), 0) == key.toLowerCase()) {
-                var datab = "#" + cTrim(object[m].split('=')[0], 0);
-                switch (cTrim(object[m].split('=')[1].toLowerCase(), 0)) {
-                    case "text":
-                        {
-                            var oobj = $(datab);
-
-                            if (oobj.attr("class") == "combo") {
-                               var vals = datas[0][key]
-                               SetComboValueForobj(oobj,vals)
-                            }
-                           else if ($(datab).attr("class") == "upfile") {
-                                var vals = datas[0][key]
-                                var dblinkinfo=datas[0]["sysdblink_yingyongip"]
-                               var filename=vals.substring(vals.lastIndexOf('/')+1,vals.length);
-                               var path=vals;
-                                if(path!="")
-                                {
-                                       if(dblinkinfo!=null)
-                                       {
-                                         path="http://"+dblinkinfo+path;
-                                       }
-                                       else
-                                       {
-                                         path="../.."+path;
-                                       }
-                                       if(typeof( $("#div_"+$(datab).attr("id"))).attr("id")=="undefined")
-                                           $(datab).after("　<a href='"+path+"' target='_blank' title='"+filename+"'>文件下载</a>");
-                                        else
-                                           $("#div_"+$(datab).attr("id")).append("<div style='padding-top:5px;float:left'><a href='"+path+"' target='_blank' title='"+filename+"'>文件下载</a></div>")
-
-                                }
-                               $(datab).val(filename);
-                               $("#"+$(datab).attr("id")).attr("path",vals);
-                            }
-                           else  if ($(datab).attr("class") == "upimage") {
-                               var vals = datas[0][key]
-                               var dblinkinfo=datas[0]["sysdblink_yingyongip"]
-                               var filename=vals.substring(vals.lastIndexOf('/')+1,vals.length);
-                               var path=vals;
-                               if(path!="")
-                               {
-                                  if(dblinkinfo!=null)
-                                  {
-                                     path="http://"+dblinkinfo+path;
-                                  }
-                                  if(typeof( $("#div_"+$(datab).attr("id"))).attr("id")=="undefined")
-                                  {
-                                      $(datab).after(PreviewImag(filename,path));
-                                  }
-                                  else
-                                  {                   
-                                    $("#div_"+$(datab).attr("id")).append("<div style='padding-top:5px;float:left'>"+PreviewImag(filename,path)+"</div>")
-                                  }
-                                 }
-                               $(datab).val(filename);
-                                $("#"+$(datab).attr("id")).attr("path",vals);
-                            }
-                            else if (oobj.attr("class") == "date") {
-                                var vals = datas[0][key]
-                                vals = ReplaceAllStr(vals, "/", "-");
-                                if (datas[0][key].indexOf(" 0:00:00") > 0) {
-                                    $(datab).val(vals.substring(0, datas[0][key].indexOf(" 0:00:00")));
-                                }
-                                else {
-                                    $(datab).val(FormatDate(vals));
-                                }
-                            }
-                            else if (oobj.attr("class") == "datetime") {
-                                var vals = datas[0][key]
-                                vals = ReplaceAllStr(vals, "/", "-");
-                                $(datab).val(vals);
-
-                            }
-                            else {
-
-                                $(datab).val(datas[0][key]);
-
-                            }
-
-                            break;
-                        }
-                    case "checkbox":
-                        {
-                            if (datas[0][key] == $(datab).val()) {
-                                $(datab).attr("checked", true);
-                            }
-                            break;
-                        }
-                    case "hidden":
-                        {
-                            $(datab).val(datas[0][key]);
-                            break;
-                        }
-                    case "textarea":
-                        {
-                            $(datab).val(datas[0][key]);
-                            break;
-                        }
-                }
-            }
-        }
-    }
-}
-
 
 //get string len
 function len(s) 
@@ -845,8 +683,6 @@ function DataToURIComponent(obj) {
     return obj;
 }
 
-
-
 //Grid
 function MoveUp(gridid) {
     var row = $("#" + gridid).datagrid('getSelected');
@@ -902,7 +738,7 @@ function treeLoad()
     $("#"+treeObj.id).tree('load', { rod: Math.random() });
 }
 
-//查询菜单
+//Search Menus
 function SearchMenus() {
 
 }
@@ -1003,7 +839,7 @@ function ShowFormAdd(title, iconCls, FormId, width, height, Parses) {
         url: "/Main/ShowFormAddEval/",
         data: "FormId=" + FormId + "&title=" + title + "&iconCls=" + iconCls + "&width=" + width + "&height=" + height + "&Type=Add&Parses=" + Parses + "&anticache=" + Math.floor(Math.random() * 1000),
         success: function (msg) {
-            //debugger;
+            debugger;
             try {
                 eval(msg);
             }
@@ -1029,7 +865,6 @@ height:高度(int)
 Parses:参数（Json）
 */
 function ShowFormEdit(title, iconCls, TableName, FormId, id, width, height, Parses) {
-    debugger;
     if (typeof Parses == "object")
         Parses = JSON.stringify(Parses);
 
@@ -1038,7 +873,7 @@ function ShowFormEdit(title, iconCls, TableName, FormId, id, width, height, Pars
         url: "/Main/ShowFormEditEval/",
         data: "TableName=" + TableName + "&FormId=" + FormId + "&title=" + title + "&iconCls=" + iconCls + "&width=" + width + "&height=" + height + "&id=" + id + "&Type=Edit&&Parses=" + Parses + "&anticache=" + Math.floor(Math.random() * 1000),
         success: function (msg) {
-            //debugger;
+            debugger;
             try {
                 eval(msg);
             }
@@ -1051,9 +886,99 @@ function ShowFormEdit(title, iconCls, TableName, FormId, id, width, height, Pars
     });
 };
 
-function ShowFormToTab(title, iconCls, FormId, Parses) {
-    opsTab = { title: "系统主页", href: '/Main/ShowFormAddEval/?FormId=' + FormId, iniframe: true, closable: false, refreshable: true, iconCls: iconCls, repeatable: true, selected: true };
-    window.mainpage.mainTabs.addModule(opsTab)
+//Open add form to tab
+function AddFormToWindow(title, iconCls, FormId, width, height, Params) {
+    debugger;
+    if (typeof Params == "object")
+        Params = JSON.stringify(Params);
+    ShowFormAdd(title, iconCls, FormId, width, height, Params);
+}
+
+//Open update form to tab
+function UpdateFormToWindow(title, iconCls, TableName, FormId, id, width, height, Params) {
+    debugger;
+    if (typeof Params == "object")
+        Params = JSON.stringify(Params);
+    ShowFormEdit(title, iconCls, TableName, FormId, id, width, height, Params);
+}
+
+//Open show form to tab
+function ShowFormToWindow(title, iconCls, TableName, FormId, id, width, height, Params) {
+    debugger;
+    if (typeof Params == "object") {
+        Params = JSON.stringify(Params);
+        Params=""
+    }
+    ShowFormEdit(title, iconCls, TableName, FormId, id, width, height, Params);
+}
+
+//Open Add Form to tab
+function AddFormToTab(title, iconCls, FormId, Params) {
+    debugger;
+    if (typeof Params == "object") {
+        Params = JSON.stringify(Params);
+        //Params=""
+    }
+   window.mainpage.mainTabs.addModule(title,"/Main/Form/?FormId=" + FormId + "&Type=Add&Parses=" + Params);
+}
+//Open Update Form to tab
+function UpdateFormToTab(title, iconCls, FormId, TableName, Id, Params) {
+    debugger;
+    if (typeof Params == "object") {
+        Params = JSON.stringify(Params);
+        Params=""
+    }
+    window.mainpage.mainTabs.addModule(title,"/Main/Form/?TableName=" + TableName + "&FormId=" + FormId + "&id=" + id + "&Type=Edit&&Parses=" + Params);
+}
+//Open Show Form to tab
+function ShowFormToTab(title, iconCls, FormId,TableName, Id, Params) {
+    debugger;
+    if (typeof Params == "object") {
+        Params = JSON.stringify(Params);
+        Params=""
+    }
+    window.mainpage.mainTabs.addModule(title,"/Main/Form/?FormId=" + FormId+ "&id=" + Id + "&Type=Edit&&Parses=" + Params,iconCls, true, true, true, true);
+}
+
+//Open Search to Window
+function SearchToWindow(title,iconCls,searchId,width,height,Params)
+{ debugger;
+     if (typeof Params == "object")
+        Params = JSON.stringify(Params);
+    $.ajax({
+        type: "GET",
+        url: "/Main/ShowFormEditEval/",
+        data: "TableName=" + TableName + "&FormId=" + FormId + "&title=" + title + "&iconCls=" + iconCls + "&width=" + width + "&height=" + height + "&id=" + id + "&Type=Edit&&Parses=" + Params + "&anticache=" + Math.floor(Math.random() * 1000),
+        success: function (msg) {
+            debugger;
+            try {
+                eval(msg);
+            }
+            catch (exception) {
+                eval(msg);
+            }
+        }
+    });
+}
+//Open Search to Tab
+function SearchToTab(title, iconCls, searchId,params)
+{
+     if (typeof Parses == "object")
+         Parses = JSON.stringify(Parses);
+     debugger;
+    window.mainpage.mainTabs.addModule(title, "/Main/Search/?SearchId="+searchId, iconCls, true, true, true, true)
+}
+
+//Open Page to Window
+function PageToWindow(title,iconCls,pageType,pageId,width,height,params)
+{ debugger;
+     if (typeof Parses == "object")
+        Parses = JSON.stringify(Parses);  
+}
+//Open Page to Tab
+function PageToTab(title, iconCls,pageType, pageId,params)
+{
+    window.mainpage.mainTabs.addModule(title, '/Main/Page/?pageId=' + pageId, iconCls, true, true, true, true)
 }
 
 function GridEditShowText(gridname, editIndex) {

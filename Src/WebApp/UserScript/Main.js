@@ -46,8 +46,7 @@
         var t = $(navMenuTree), root = $.extend({}, $.array.first(window.mainpage.navMenusData, function (val) { return val.id == id; }));
 
         $.get("/Main/GetChildrenMenusAuthorization/?parentId=" + id + "&id=rood=" + Math.floor(Math.random() * 1000), function (menus) {
-            root.children = menus;
-            debugger;
+            root.children = menus;    
             t.tree("loadData", [root]);
         }, "json");
 
@@ -108,7 +107,11 @@
             onDragEnter: function (target, source) { return false },
             onDragEnter: function (target, source) { return false },
             onClick: function (node) {
-                window.mainpage.OpenTypeForTree(node);
+                try {
+                    debugger;
+                    eval(node.attributes.href);
+                }
+                catch (e) { }
             },
             onLoadSuccess: function (node, data) {
                 $(navMenuList).find("a").removeAttr("disabled");
@@ -119,141 +122,7 @@
         });
     };
 
-    window.mainpage.OpenType = function (node) {
-
-        var hrefobj, type, href;
-        var n = node || {}, attrs = node.attributes || {}, opts = $.extend({}, n, { title: n.text }, attrs);
-
-        if (!attrs.href) {
-            if (!node.children) {
-                $.easyui.messager.alert('操作提醒', '菜单地址定义出错，请检查！')
-                return;
-            }
-        }
-        else {
-            if (attrs.href.indexOf("{") > -1) {
-                hrefobj = $.string.toObject(node.attributes.href);
-                type = !hrefobj.type ? "search" : hrefobj.type;
-                href = !hrefobj.href ? "" : hrefobj.href;
-            }
-            else {
-                type = "search";
-                href = node.attributes.href;
-            }
-        }
-        if (type == "search") {
-            window.mainpage.addModuleTab(node);
-        }
-        else if (type == "form")
-            window.mainpage.ShowDg(node);
-        else if (type == "FormEdit")
-            window.mainpage.ShowDg(node);
-        else {
-            window.mainpage.addModuleTab(node);
-        }
-    }
-    window.mainpage.OpenTypeForTree = function (node) {
-
-        var hrefobj, type, href;
-        var n = node || {}, attrs = node.attributes || {}, opts = $.extend({}, n, { title: n.text }, attrs);
-
-        if (!attrs.href) {
-            if (!node.children) {
-                $.easyui.messager.alert('操作提醒', '菜单地址定义出错，请检查！')
-                return;
-            }
-        }
-        else {
-            if (attrs.href.indexOf("{") > -1) {
-                hrefobj = $.string.toObject(node.attributes.href);
-                type = !hrefobj.type ? "search" : hrefobj.type;
-                href = !hrefobj.href ? "" : hrefobj.href;
-            }
-            else {
-                type = "search";
-                href = node.attributes.href;
-            }
-        }
-        debugger;
-        type = type.toLowerCase();
-        if (type == "search") {
-            window.mainpage.addModuleTab(node);
-        }
-        else if (type == "form")
-            window.mainpage.ShowDg(node);
-        else if (type == "formedit") {
-            var n = node || {}, attrs = node.attributes || {}, opts = $.extend({}, n, { title: n.text }, attrs);
-            if (!opts.href) { return; };
-            var hrefobj = eval("(" + attrs.href + ")");
-            var title = node.text;
-            var iconCls = node.iconCls;
-            var TableName = hrefobj.TableName;
-            var FormId = hrefobj.FormId;
-            var id = hrefobj.Id;
-            var Parses = hrefobj.Parses;
-            var href = hrefobj.href;
-            var width = hrefobj.width;
-            var height = hrefobj.height;
-            ShowFormEdit(title, iconCls, TableName, FormId, id, width, height, Parses)
-        }
-        else if (type == "formadd") {
-            var n = node || {}, attrs = node.attributes || {}, opts = $.extend({}, n, { title: n.text }, attrs);
-            if (!opts.href) { return; };
-            var hrefobj = eval("(" + attrs.href + ")");
-            var title = node.text;
-            var iconCls = node.iconCls;
-            var TableName = hrefobj.TableName;
-            var FormId = hrefobj.FormId;
-           // var id = hrefobj.Id;
-            var Parses = hrefobj.Parses;
-            var href = hrefobj.href;
-            var width = hrefobj.width;
-            var height = hrefobj.height;
-            ShowFormAdd(title, iconCls, FormId, width, height, Parses);
-        }
-        else if (type == "formtotab") {
-            var n = node || {}, attrs = node.attributes || {}, opts = $.extend({}, n, { title: n.text }, attrs);
-            if (!opts.href) { return; };
-            var hrefobj = eval("(" + attrs.href + ")");
-            var title = node.text;
-            var iconCls = node.iconCls;
-            var TableName = hrefobj.TableName;
-            var FormId = hrefobj.FormId;
-           // var id = hrefobj.Id;
-            var Parses = hrefobj.Parses;
-            var href = hrefobj.href;
-            var width = hrefobj.width;
-            var height = hrefobj.height;
-            window.mainpage.mainTabs.addModule(title, '/Main/AddFormTest/?FormId=' + FormId, iconCls, false);
-        }
-        else if (type == "gridtreetotab") {
-            var n = node || {}, attrs = node.attributes || {}, opts = $.extend({}, n, { title: n.text }, attrs);
-            if (!opts.href) { return; };
-            var hrefobj = eval("(" + attrs.href + ")");
-            var title = node.text;
-            var iconCls = node.iconCls;
-            var TableName = hrefobj.TableName;
-            var FormId = hrefobj.FormId;
-           // var id = hrefobj.Id;
-            var Parses = hrefobj.Parses;
-            var href = hrefobj.href;
-            var width = hrefobj.width;
-            var height = hrefobj.height;
-            window.mainpage.mainTabs.addModule(title, '/Main/AddGridTree/?FormId=' + FormId, iconCls, false);
-        }
-        else if (type == "js") {
-            var n = node || {}, attrs = node.attributes || {}, opts = $.extend({}, n, { title: n.text }, attrs);
-            if (!opts.href) { return; };
-            debugger;
-            var hrefobj = eval("(" + attrs.href + ")");
-            var script =  hrefobj.script;    
-            var Parses ="parses";          
-            eval(script);           
-        }
-        else {
-            window.mainpage.addModuleTab(node);
-        }
-    }
+   
 
     //  初始化应用程序主界面左侧面板中“导航菜单”的数据，并加载特定的子菜单树数据。
     window.mainpage.instMainMenus = function () {
@@ -436,7 +305,7 @@
             $.extend(ret, window.mainpage.mainTabs.tabDefaultOption, { title: args[0], href: args[1], iconCls: args[2], iniframe: args[3], closable: args[4], refreshable: args[5] });
         } else if (args.length >= 7) {
             $.extend(ret, window.mainpage.mainTabs.tabDefaultOption, { title: args[0], href: args[1], iconCls: args[2], iniframe: args[3], closable: args[4], refreshable: args[5], selected: args[6] });
-        }
+        } 
         return ret;
     };
 
