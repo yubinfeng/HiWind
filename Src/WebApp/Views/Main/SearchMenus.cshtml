@@ -107,7 +107,9 @@
                                 var formData = d.form("getData", { onlyEnabled: false });
                                 // 重新获取菜单目标信息                               
                                 formData = getMenuUrlData(formData);
-                                $.messager.progress({ text: "" + "新增表单" + "  正在保存中……", width: 150, height: 20 });	
+                                if (!formData)
+                                    return false;
+                                $.messager.progress({ text: "" + "新增表单" + "  正在保存中……", width: 150, height: 20 });
                                 if (isValid) {
                                     $.ajax({
                                         type: "POST",
@@ -115,9 +117,9 @@
                                         data: formData,
                                         success: function (data) {
                                             var obj = eval("(" + data + ")");
-                                            if (obj.result = true) {                               
-                                                $.messager.progress('close');	
-                                                $(dg).dialog("close",true);
+                                            if (obj.result = true) {
+                                                $.messager.progress('close');
+                                                $(dg).dialog("close", true);
                                                 $.messager.alert(obj.msg, function () { $('#SearchGrid').treegrid('reload', { rod: Math.random() }); });
                                             }
                                             else {
@@ -216,7 +218,9 @@
                                 var isValid = d.form("validate");
                                  var formData = d.form("getData", { onlyEnabled: false });
                                 // 重新获取菜单目标信息                               
-                                formData = getMenuUrlData(formData);
+                                 formData = getMenuUrlData(formData);
+                                 if (!formData)
+                                     return false;
                                 $.messager.progress({ text: "" + "修改表单" + "  正在保存中……", width: 150, height: 20 });	
                                 if (isValid) {
                                     $.ajax({
@@ -307,10 +311,12 @@
                         {
                             text: "克隆", iconCls: "icon-standard-shape-ungroup", handler: function (d) {
                                 var isValid = d.form("validate");
-                                 var formData = d.form("getData", { onlyEnabled: false });
-                                 // 重新获取菜单目标信息                               
+                                var formData = d.form("getData", { onlyEnabled: false });
+                                // 重新获取菜单目标信息                               
                                 formData = getMenuUrlData(formData);
-                                $.messager.progress({ text: "" + "修改表单" + "  正在克隆中……", width: 150, height: 20 });	
+                                if (!formData)
+                                    return false;
+                                $.messager.progress({ text: "" + "修改表单" + "  正在克隆中……", width: 150, height: 20 });
                                 if (isValid) {
                                     $.ajax({
                                         type: "POST",
@@ -318,11 +324,11 @@
                                         data: formData,
                                         success: function (data) {
                                             var obj = eval("(" + data + ")");
-                                            if (obj.result = true) {                                      
+                                            if (obj.result = true) {
                                                 treeLoad();
-                                                $.messager.progress('close');	
+                                                $.messager.progress('close');
                                                 $.messager.alert(obj.msg, function () { $('#SearchGrid').treegrid('reload', { rod: Math.random() }); });
-                                                 $(dggg).dialog("close",true);                                               
+                                                $(dggg).dialog("close", true);
                                             }
                                             else {
                                                 $.messager.alert("操作提醒", obj.msg, "warning", function () { $.messager.progress('close'); });
@@ -413,45 +419,111 @@
 
         /*Get MenuUrl*/
         function getMenuUrlData(formData) {
+              debugger;
+            var strErr = "";
+            if (formData.SysMenus_MenuUrlType == "")
+                strErr += "目标类型不能为空！<br>";
             switch (formData.SysMenus_MenuUrlType) {
                 case "Search": {
-                    formData.SysMenus_MenuUrl = "{";
-                    formData.SysMenus_MenuUrl += "\"OpenType\":\""+formData.OpenType+"\",\"SearchId\":\"" + formData.ObjectSelect + "\"";
-                    if (formData.OpenType == "OpenWindow")
-                        formData.SysMenus_MenuUrl += ",\"Width\":\"" + formData.WinSizeWidth + "\",\"Height\":\"" + formData.WinSizeHeight + "\"";
-                    if (formData.Params != "")
-                        formData.SysMenus_MenuUrl += ",\"Params\":\"" + formData.Params + "\"";
-                    formData.SysMenus_MenuUrl += "}";
+                    if (formData.OpenType == "")
+                        strErr += "打开方式不能为空！<br>";
+                    if (formData.ObjectSelect == "")
+                        strErr += "选择查询不能为空！<br>";
+                    if (formData.OpenType == "")
+                        strErr += "查询打开方式不能为空！<br>";
+                    else if (formData.OpenType == "OpenWindow") {
+                        if (formData.WinSizeWidth == "")
+                            strErr += "查询窗口宽不能为空！<br>";
+                        if (formData.WinSizeHeight == "")
+                            strErr += "查询窗口高不能为空！<br>";
+                    }
+                    if (strErr != "") {
+                        $.messager.alert("操作提醒", strErr);
+                        return false;
+                    }
+                    else {
+                        formData.SysMenus_MenuUrl = "{";
+                        formData.SysMenus_MenuUrl += "\"OpenType\":\"" + formData.OpenType + "\",\"SearchId\":\"" + formData.ObjectSelect + "\"";
+                        if (formData.OpenType == "OpenWindow")
+                            formData.SysMenus_MenuUrl += ",\"Width\":\"" + formData.WinSizeWidth + "\",\"Height\":\"" + formData.WinSizeHeight + "\"";
+                        if (formData.Params != "")
+                            formData.SysMenus_MenuUrl += ",\"Params\":\"" + formData.Params + "\"";
+                        formData.SysMenus_MenuUrl += "}";
+                    }
                 }
                     break;
 
-                case "From": {
-                    formData.SysMenus_MenuUrl = "{";
-                    formData.SysMenus_MenuUrl += "\"OpenType\":\""+formData.OpenType+"\",\"FormId\":\"" + formData.ObjectSelect + "\",\"FormType\":\"" + formData.FormType + "\"";
-                    if (formData.FormType == "Updatae" || formData.FormType == "Show") {
-                        formData.SysMenus_MenuUrl += ",\"TableName\":\"" + formData.TableName + "\",\"Id\":\"" + formData.Id + "\"";
+                case "Form": {                  
+                    if (formData.OpenType == "")
+                        strErr += "打开方式不能为空！<br>";
+                    if (formData.ObjectSelect == "")
+                        strErr += "选择表单不能为空！<br>";
+                    if (formData.OpenType == "")
+                        strErr += "表单打开方式不能为空！<br>";
+                    else if (formData.OpenType == "OpenWindow") {
+                        if (formData.WinSizeWidth == "")
+                            strErr += "表单窗口宽不能为空！<br>";
+                        if (formData.WinSizeHeight == "")
+                            strErr += "表单窗口高不能为空！<br>";
                     }
-                    if (formData.OpenType == "OpenWindow")
-                        formData.SysMenus_MenuUrl += ",\"Width\":\"" + formData.WinSizeWidth + "\",\"Height\":\"" + formData.WinSizeHeight + "\"";
-                    if (formData.Params != "")
-                        formData.SysMenus_MenuUrl += ",\"Params\":\"" + formData.Params + "\"";
-                    formData.SysMenus_MenuUrl += "}";
+                    if (strErr != "") {
+                        $.messager.alert("操作提醒", strErr);
+                        return false;
+                    }
+                    else {
+                        formData.SysMenus_MenuUrl = "{";
+                        formData.SysMenus_MenuUrl += "\"OpenType\":\"" + formData.OpenType + "\",\"FormId\":\"" + formData.ObjectSelect + "\",\"FormType\":\"" + formData.FormType + "\"";
+                        if (formData.FormType == "Updatae" || formData.FormType == "Show") {
+                            formData.SysMenus_MenuUrl += ",\"TableName\":\"" + formData.TableName + "\",\"Id\":\"" + formData.Id + "\"";
+                        }
+                        if (formData.OpenType == "OpenWindow")
+                            formData.SysMenus_MenuUrl += ",\"Width\":\"" + formData.WinSizeWidth + "\",\"Height\":\"" + formData.WinSizeHeight + "\"";
+                        if (formData.Params != "")
+                            formData.SysMenus_MenuUrl += ",\"Params\":\"" + formData.Params + "\"";
+                        formData.SysMenus_MenuUrl += "}";
+                    }
                 }
                     break;
 
                 case "Page": {
-                    formData.SysMenus_MenuUrl = "{";
-                    formData.SysMenus_MenuUrl += "\"OpenType\":\""+formData.OpenType+"\",\"Url\":\"" + formData.Params + "\"";
-                    if (formData.OpenType == "OpenWindow")
-                        formData.SysMenus_MenuUrl += ",\"Width\":\"" + formData.WinSizeWidth + "\",\"Height\":\"" + formData.WinSizeHeight + "\"";
-                    formData.SysMenus_MenuUrl += "}";
+                    if (formData.OpenType == "")
+                        strErr += "打开方式不能为空！<br>";
+                    if (formData.OpenType == "")
+                        strErr += "页面打开方式不能为空！<br>";
+                    if (formData.Params == "")
+                        strErr += "页面地址不能为空！<br>";
+                    else if (formData.OpenType == "OpenWindow") {
+                        if (formData.WinSizeWidth == "")
+                            strErr += "页面窗口宽不能为空！<br>";
+                        if (formData.WinSizeHeight == "")
+                            strErr += "页面窗口高不能为空！<br>";
+                    }
+                    if (strErr != "") {
+                        $.messager.alert("操作提醒", strErr);
+                        return false;
+                    }
+                    else {
+                        formData.SysMenus_MenuUrl = "{";
+                        formData.SysMenus_MenuUrl += "\"OpenType\":\"" + formData.OpenType + "\",\"Url\":\"" + formData.Params + "\"";
+                        if (formData.OpenType == "OpenWindow")
+                            formData.SysMenus_MenuUrl += ",\"Width\":\"" + formData.WinSizeWidth + "\",\"Height\":\"" + formData.WinSizeHeight + "\"";
+                        formData.SysMenus_MenuUrl += "}";
+                    }
                 }
                     break;
 
                 case "Js": {
-                    formData.SysMenus_MenuUrl = "{";
-                    formData.SysMenus_MenuUrl += "\"Script\":\"" + formData.Params + "\"";
-                    formData.SysMenus_MenuUrl += "}";
+                    if (formData.Params == "")
+                        strErr += "脚本不能为空！<br>";
+                    if (strErr != "") {
+                        $.messager.alert("操作提醒", strErr);
+                        return false;
+                    }
+                    else {
+                        formData.SysMenus_MenuUrl = "{";
+                        formData.SysMenus_MenuUrl += "\"Script\":\"" + formData.Params + "\"";
+                        formData.SysMenus_MenuUrl += "}";
+                    }
                 }
                     break;
                 case "Transaction": {
